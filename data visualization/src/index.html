@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="utf-8">
+<head>
+  <link rel="stylesheet" href="style.css">
+  </head>
+<style>
+	.state{
+		fill: none;
+		stroke: #a9a9a9;
+		stroke-width: 1;
+	}
+  .state:hover {
+  fill-opacity: 0.5;
+  transition: fill-opacity 0.3s ease; /* 添加渐变过渡效果 */
+}
+
+	#tooltip {   
+		position: absolute;           
+		text-align: center;
+		padding: 20px;             
+		margin: 10px;
+		font: 12px sans-serif;        
+		background: lightsteelblue;   
+		border: 1px;      
+		border-radius: 2px;           
+		pointer-events: none;         
+	}
+	#tooltip h4{
+		margin:0;
+		font-size:14px;
+	}
+	#tooltip{
+		background:rgba(0,0,0,0.9);
+		border:1px solid grey;
+		border-radius:5px;
+		font-size:12px;
+		width:auto;
+		padding:4px;
+		color:white;
+		opacity:0;
+	}
+	#tooltip table{
+		table-layout:fixed;
+	}
+	#tooltip tr td{
+		padding:0;
+		margin:0;
+	}
+	#tooltip tr td:nth-child(1){
+		width:50px;
+	}
+	#tooltip tr td:nth-child(2){
+		text-align:center;
+	}
+</style>
+<header>
+  <h1>中国各省市近二十年的水资源变化</h1>
+</header>
+
+<p class="text-before-1">横向对比各省市供水量和水资源在全国占比</p>
+<body>
+  <select id="chart-select">
+    <option value="my2022">2022年数据表</option>
+    <option value="my2021">2021年数据表</option>
+    <option value="my2020">2020年数据表</option>
+    <option value="my2019">2019年数据表</option>
+    <option value="my2018">2018年数据表</option>
+    <option value="my2017">2017年数据表</option>
+    <option value="my2016">2016年数据表</option>
+    <option value="my2015">2015年数据表</option>
+    <option value="my2014">2014年数据表</option>
+    <option value="my2013">2013年数据表</option>
+    <option value="my2012">2012年数据表</option>
+    <option value="my2011">2011年数据表</option>
+    <option value="my2010">2010年数据表</option>
+    <option value="my2009">2009年数据表</option>
+    <option value="my2008">2008年数据表</option>
+    <option value="my2007">2007年数据表</option>
+    <option value="my2006">2006年数据表</option>
+    <option value="my2005">2005年数据表</option>
+    <option value="my2004">2004年数据表</option>
+  </select>
+  <div id="my2022" class="chart1">
+    <svg id="svg2022"></svg>
+  </div>
+  <div id="my2021" class="chart">
+    <svg id="svg2021"></svg>
+  </div>
+  <div id="my2020" class="chart">
+    <svg id="svg2020"></svg>
+  </div>
+  <div id="my2019" class="chart">
+    <svg id="svg2019"></svg>
+  </div>
+  <div id="my2019" class="chart">
+    <svg id="svg2019"></svg>
+  </div>
+  <div id="my2018" class="chart">
+    <svg id="svg2018"></svg>
+  </div>
+  <div id="my2017" class="chart">
+    <svg id="svg2017"></svg>
+  </div>
+  <div id="my2016" class="chart">
+    <svg id="svg2016"></svg>
+  </div>
+  <div id="my2015" class="chart">
+    <svg id="svg2015"></svg>
+  </div>
+  <div id="my2014" class="chart">
+    <svg id="svg2014"></svg>
+  </div>
+  <div id="my2013" class="chart">
+    <svg id="svg2013"></svg>
+  </div>
+  <div id="my2012" class="chart">
+    <svg id="svg2012"></svg>
+  </div>
+  <div id="my2011" class="chart">
+  <svg id="svg2011"></svg>
+  </div>
+  <div id="my2011" class="chart">
+    <svg id="svg2011"></svg>
+    </div>
+  <div id="my2010" class="chart">
+  <svg id="svg2010"></svg>
+  </div>
+  <div id="my2009" class="chart">
+    <svg id="svg2009"></svg>
+    </div>
+  <div id="my2008" class="chart">
+      <svg id="svg2008"></svg>
+    </div>
+  <div id="my2007" class="chart">
+      <svg id="svg2007"></svg>
+  </div>
+  <div id="my2006" class="chart">
+    <svg id="svg2006"></svg>
+    </div>
+    <div id="my2005" class="chart">
+      <svg id="svg2005"></svg>
+      </div>
+      <div id="my2004" class="chart">
+        <svg id="svg2004"></svg>
+        </div>
+  
+  <script src="vertical.js"></script>
+  
+<p class="text-between-12">地理层面上各省市2004-2022年人均供水量和人均水资源对比</p>
+
+<div id="tooltip"></div>
+<select id="dropdown">
+	<option value="2022">2022年</option>
+	<option value="2021">2021年</option>
+	<option value="2020">2020年</option>
+	<option value="2019">2019年</option>
+	<option value="2018">2018年</option>
+	<option value="2017">2017年</option>
+	<option value="2016">2016年</option>
+	<option value="2015">2015年</option>
+	<option value="2014">2014年</option>
+	<option value="2013">2013年</option>
+	<option value="2012">2012年</option>
+	<option value="2011">2011年</option>
+	<option value="2010">2010年</option>
+	<option value="2009">2009年</option>
+	<option value="2008">2008年</option>
+	<option value="2007">2007年</option>
+	<option value="2006">2006年</option>
+	<option value="2005">2005年</option>
+	<option value="2004">2004年</option>
+</select>
+<select id="dropdown2">
+	<option value="supply">人均供水</option>
+  <option value="waterload">人均水资源</option>
+</select>
+<svg width="560" height="470" id="statesvg"></svg> 
+<script src="china.js"></script>
+<script src="main.js"></script>
+
+<script>
+function getDataFromSource(year) {
+  var data = {
+  "2022":[
+      { "value": 2184, "code": "北京市" ,"water":40,"load":23.7},
+      { "value": 1363, "code": "天津市" ,"water":33.6,"load": 16.6},
+      { "value": 7420, "code": "河北省" ,"water":182.4,"load":188},
+      { "value": 3481, "code": "山西省" ,"water":72.1,"load":153.5},
+      { "value": 2401, "code": "内蒙古自治区" ,"water":191.5,"load":509.2},
+      { "value": 4197, "code": "辽宁省" ,"water":126,"load":561.7},
+      { "value": 2348, "code": "吉林省" ,"water":104.5,"load":705.1},
+      { "value": 3099, "code": "黑龙江省" ,"water":307.7,"load":918.5},
+      { "value": 2475, "code": "上海市" ,"water":105.7,"load":33.1},
+      { "value": 8515, "code": "江苏省" ,"water":611.8,"load":192.8},
+      { "value": 6577, "code": "浙江省" ,"water":167.8,"load":934.3},
+      { "value": 6127, "code": "安徽省" ,"water":300.5,"load":545.2},
+      { "value": 4188, "code": "福建省" ,"water":167.9,"load":1174.7},
+      { "value": 4528, "code": "江西省" ,"water":269.8,"load":1556.2},
+      { "value": 10163, "code": "山东省" ,"water":217,"load":508.9},
+      { "value": 9872, "code": "河南省" ,"water":228,"load":249.4},
+      { "value": 5844, "code": "湖北省" ,"water":353.1,"load":714.2},
+      { "value": 6604, "code": "湖南省" ,"water":331,"load":1683.8},
+      { "value": 12657, "code": "广东省" ,"water":401.7,"load":2223.6},
+      { "value": 5047, "code": "广西壮族自治区" ,"water":264,"load":2208.5},
+      { "value": 1027, "code": "海南省" ,"water":45.6,"load":363.8},
+      { "value": 3213, "code": "重庆市" ,"water":68.8,"load":373.5},
+      { "value": 8374, "code": "四川省" ,"water":251.6,"load":2209.2},
+      { "value": 3856, "code": "贵州省" ,"water":96.3,"load":912.4},
+      { "value": 4693, "code": "云南省" ,"water":163.4,"load":1742.8},
+      { "value": 364, "code": "西藏自治区" ,"water":31.8,"load":4139.7},
+      { "value": 3956, "code": "陕西省" ,"water":94.9,"load":365.8},
+      { "value": 2492, "code": "甘肃省" ,"water":112.9,"load":231},
+      { "value": 595, "code": "青海省" ,"water":24.5,"load":725.7},
+      { "value": 728, "code": "宁夏回族自治区" ,"water":66.3,"load":8.9},
+      { "value": 2587, "code": "新疆维吾尔自治区" ,"water":566.4,"load":914.1},
+      { "value": 0, "code": "台湾" ,"water":0,"load":0},
+      { "value": 0, "code": "澳门" ,"water":0,"load":0},
+      { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+  ],
+  "2021":[
+    {"value": 2189, "code": "北京市", "water": 40.8, "load": 61.3},
+    {"value": 1373, "code": "天津市", "water": 32.3, "load": 39.8},
+    {"value": 7448, "code": "河北省", "water": 181.9, "load": 376.6},
+    {"value": 3480, "code": "山西省", "water": 72.6, "load": 207.9},
+    {"value": 2400, "code": "内蒙古自治区", "water": 191.7, "load": 942.9},
+    {"value": 4229, "code": "辽宁省", "water": 129, "load": 511.7},
+    {"value": 2375, "code": "吉林省", "water": 110.2, "load": 459.2},
+    {"value": 3125, "code": "黑龙江省", "water": 324.5, "load": 1196.3},
+    {"value": 2489, "code": "上海市", "water": 105.8, "load": 53.9},
+    {"value": 8505, "code": "江苏省", "water": 567.5, "load": 500.8},
+    {"value": 6540, "code": "浙江省", "water": 166.4, "load": 1344.7},
+    {"value": 6113, "code": "安徽省", "water": 271.7, "load": 883.3},
+    {"value": 4187, "code": "福建省", "water": 182.6, "load": 758.7},
+    {"value": 4517, "code": "江西省", "water": 249.4, "load": 1419.7},
+    {"value": 10170, "code": "山东省", "water": 210.1, "load": 525.3},
+    {"value": 9883, "code": "河南省", "water": 222.9, "load": 689.2},
+    {"value": 5830, "code": "湖北省", "water": 336.1, "load": 1188.8},
+    {"value": 6622, "code": "湖南省", "water": 322.4, "load": 1790.6},
+    {"value": 12684, "code": "广东省", "water": 407, "load": 1221.2},
+    {"value": 5037, "code": "广西壮族自治区", "water": 268.5, "load": 1541.2},
+    {"value": 1020, "code": "海南省", "water": 45, "load": 341.6},
+    {"value": 3212, "code": "重庆市", "water": 72.1, "load": 750.8},
+    {"value": 8372, "code": "四川省", "water": 244.3, "load": 2924.5},
+    {"value": 3852, "code": "贵州省", "water": 104.1, "load": 1091.4},
+    {"value": 4690, "code": "云南省", "water": 160.3, "load": 1615.8},
+    {"value": 366, "code": "西藏自治区", "water": 32.4, "load": 4408.9},
+    {"value": 3954, "code": "陕西省", "water": 91.8, "load": 852.5},
+    {"value": 2490, "code": "甘肃省", "water": 110.1, "load": 279},
+    {"value": 594, "code": "青海省", "water": 24.5, "load": 842.2},
+    {"value": 725, "code": "宁夏回族自治区", "water": 68.1, "load": 9.3},
+    {"value": 2589, "code": "新疆维吾尔自治区", "water": 573.9, "load": 809},
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+  ],
+  "2020":[
+{"value": 2189, "code": "北京市","water": 40.6,"load": 25.8},
+{"value": 1387, "code": "天津市", "water": 27.8, "load": 13.3},
+{"value": 7464, "code": "河北省", "water": 182.8, "load": 146.3},
+{"value": 3490, "code": "山西省", "water": 72.8, "load": 115.2},
+{"value": 2403, "code": "内蒙古自治区", "water": 194.4, "load": 503.9},
+{"value": 4255, "code": "辽宁省", "water": 129.3, "load": 397.1},
+{"value": 2399, "code": "吉林省", "water": 117.7, "load": 586.2},
+{"value": 3171, "code": "黑龙江省", "water": 314.1, "load": 1419.9},
+{"value": 2488, "code": "上海市", "water": 97.5, "load": 58.6},
+{"value": 8477, "code": "江苏省", "water": 572, "load": 543.4},
+{"value": 6468, "code": "浙江省", "water": 163.9, "load": 1026.6},
+{"value": 6105, "code": "安徽省", "water": 268.3, "load": 1280.4},
+{"value": 4161, "code": "福建省", "water": 183, "load": 760.3},
+{"value": 4519, "code": "江西省", "water": 244.1, "load": 1685.6},
+{"value": 10165, "code": "山东省", "water": 222.5, "load": 375.3},
+{"value": 9941, "code": "河南省", "water": 237.1, "load": 408.6},
+{"value": 5745, "code": "湖北省", "water": 278.9, "load": 1754.7},
+{"value": 6645, "code": "湖南省", "water": 305.1, "load": 2118.9},
+{"value": 12624, "code": "广东省", "water": 405.1, "load": 1626},
+{"value": 5019, "code": "广西壮族自治区", "water": 261.1, "load": 2114.8},
+{"value": 1012, "code": "海南省", "water": 44, "load": 263.6},
+{"value": 3209, "code": "重庆市", "water": 70.1, "load": 766.9},
+{"value": 8371, "code": "四川省", "water": 236.9, "load": 3237.3},
+{"value": 3858, "code": "贵州省", "water": 90.1, "load": 1328.6},
+{"value": 4722, "code": "云南省", "water": 156, "load": 1799.2},
+{"value": 366, "code": "西藏自治区", "water": 32.2, "load": 4597.3},
+{"value": 3955, "code": "陕西省", "water": 90.6, "load": 419.6},
+{"value": 2501, "code": "甘肃省", "water": 109.9, "load": 408},
+{"value": 593, "code": "青海省", "water": 24.3, "load": 1011.9},
+{"value": 721, "code": "宁夏回族自治区", "water": 70.2, "load": 11},
+{"value": 2590, "code": "新疆省", "water": 570.4, "load": 801},
+{ "value": 0, "code": "台湾" ,"water":0,"load":0},
+{ "value": 0, "code": "澳门" ,"water":0,"load":0},
+{ "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2019":[
+  { "value": 2190, "code": "北京市" ,"water":41.7,"load":24.6},
+  { "value": 1385, "code": "天津市" ,"water":28.4,"load":8.1},
+  { "value": 7447, "code": "河北省" ,"water":182.3,"load":113.5},
+  { "value": 3497, "code": "山西省" ,"water":76,"load":97.3},
+  { "value": 2415, "code": "内蒙古自治区" ,"water":190.9,"load":447.9},
+  { "value": 4277, "code": "辽宁省" ,"water":130.3,"load":256},
+  { "value": 2448, "code": "吉林省" ,"water":115.4,"load":506.1},
+  { "value": 3255, "code": "黑龙江省" ,"water":310.4,"load":1511.4},
+  { "value": 2481, "code": "上海市" ,"water":100.9,"load":48.3},
+  { "value": 8469, "code": "江苏省" ,"water":619.1,"load":231.7},
+  { "value": 6375, "code": "浙江省" ,"water":165.8,"load":1321.5},
+  { "value": 6092, "code": "安徽省" ,"water":277.7,"load":539.9},
+  { "value": 4137, "code": "福建省" ,"water":177.5,"load":1363.9},
+  { "value": 4516, "code": "江西省" ,"water":253.3,"load":2051.6},
+  { "value": 10106, "code": "山东省" ,"water":225.3,"load":195.2},
+  { "value": 9901, "code": "河南省" ,"water":237.8,"load":168.6},
+  { "value": 5927, "code": "湖北省" ,"water":303.2,"load":613.7},
+  { "value": 6640, "code": "湖南省" ,"water":333,"load":2098.3},
+  { "value": 12489, "code": "广东省" ,"water":412.3,"load":2068.2},
+  { "value": 4982, "code": "广西壮族自治区" ,"water":283.4,"load":2105.1},
+  { "value": 995, "code": "海南省" ,"water":46.4,"load":252.3},
+  { "value": 3188, "code": "重庆市" ,"water":76.5,"load":498.1},
+  { "value": 8351, "code": "四川省" ,"water":252.4,"load":2748.9},
+  { "value": 3848, "code": "贵州省" ,"water":108.1,"load":1117},
+  { "value": 4714, "code": "云南省" ,"water":154.9,"load":1533.8},
+  { "value": 361, "code": "西藏自治区" ,"water":32,"load":4496.9},
+  { "value": 3944, "code": "陕西省" ,"water":92.6,"load":495.3},
+  { "value": 2509, "code": "甘肃省" ,"water":110,"load":325.9},
+  { "value": 590, "code": "青海省" ,"water":26.2,"load":919.3},
+  { "value": 717, "code": "宁夏回族自治区" ,"water":69.9,"load":12.6},
+  { "value": 2559, "code": "新疆维吾尔自治区" ,"water":587.7,"load":870.1},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2018":[
+  { "value": 2192, "code": "北京市" ,"water":39.3,"load":35.5},
+  { "value": 1383, "code": "天津市" ,"water":28.4,"load":17.6},
+  { "value": 7426, "code": "河北省" ,"water":182.4,"load":164.1},
+  { "value": 3502, "code": "山西省" ,"water":74.3,"load":121.9},
+  { "value": 2422, "code": "内蒙古自治区" ,"water":192.1,"load":461.5},
+  { "value": 4291, "code": "辽宁省" ,"water":130.3,"load":235.4},
+  { "value": 2484, "code": "吉林省" ,"water":119.5,"load":481.2},
+  { "value": 3327, "code": "黑龙江省" ,"water":343.9,"load":1011.4},
+  { "value": 2475, "code": "上海市" ,"water":103.4,"load":38.7},
+  { "value": 8446, "code": "江苏省" ,"water":592,"load":378.4},
+  { "value": 6273, "code": "浙江省" ,"water":173.8,"load":866.2},
+  { "value": 6076, "code": "安徽省" ,"water":285.8,"load":835.8},
+  { "value": 4104, "code": "福建省" ,"water":186.9,"load":778.5},
+  { "value": 4513, "code": "江西省" ,"water":250.8,"load":1149.1},
+  { "value": 10077, "code": "山东省" ,"water":212.7,"load":343.3},
+  { "value": 9864, "code": "河南省" ,"water":234.6,"load":339.8},
+  { "value": 5917, "code": "湖北省" ,"water":296.9,"load":857},
+  { "value": 6635, "code": "湖南省" ,"water":337,"load":1342.9},
+  { "value": 12348, "code": "广东省" ,"water":420.9,"load":1895.1},
+  { "value": 4947, "code": "广西壮族自治区" ,"water":287.8,"load":1831},
+  { "value": 982, "code": "海南省" ,"water":45.1,"load":418.1},
+  { "value": 3163, "code": "重庆市" ,"water":77.2,"load":524.2},
+  { "value": 8321, "code": "四川省" ,"water":259.1,"load":2952.6},
+  { "value": 3822, "code": "贵州省" ,"water":106.8,"load":978.7},
+  { "value": 4703, "code": "云南省" ,"water":155.7,"load":2206.5},
+  { "value": 354, "code": "西藏自治区" ,"water":31.7,"load":4658.2},
+  { "value": 3931, "code": "陕西省" ,"water":93.7,"load":371.4},
+  { "value": 2515, "code": "甘肃省" ,"water":112.3,"load":333.3},
+  { "value": 587, "code": "青海省" ,"water":26.1,"load":961.9},
+  { "value": 710, "code": "宁夏回族自治区" ,"water":66.2,"load":14.7},
+  { "value": 2520, "code": "新疆维吾尔自治区" ,"water":548.8,"load":858.8},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2017":[
+  { "value": 2194, "code": "北京市" ,"water":39.5,"load":29.8},
+  { "value": 1410, "code": "天津市" ,"water":27.5,"load":13},
+  { "value": 7409, "code": "河北省" ,"water":181.6,"load":138.3},
+  { "value": 3510, "code": "山西省" ,"water":74.9,"load":130.2},
+  { "value": 2433, "code": "内蒙古自治区" ,"water":188,"load":309.9},
+  { "value": 4312, "code": "辽宁省" ,"water":131.1,"load":186.3},
+  { "value": 2526, "code": "吉林省" ,"water":126.7,"load":394.4},
+  { "value": 3399, "code": "黑龙江省" ,"water":353.1,"load":742.5},
+  { "value": 2466, "code": "上海市" ,"water":104.8,"load":34},
+  { "value": 8423, "code": "江苏省" ,"water":591.3,"load":392.9},
+  { "value": 6170, "code": "浙江省" ,"water":179.5,"load":895.3},
+  { "value": 6057, "code": "安徽省" ,"water":290.3,"load":784.9},
+  { "value": 4065, "code": "福建省" ,"water":192,"load":1055.6},
+  { "value": 4511, "code": "江西省" ,"water":248,"load":1655.1},
+  { "value": 10033, "code": "山东省" ,"water":209.5,"load":225.6},
+  { "value": 9829, "code": "河南省" ,"water":233.8,"load":423.1},
+  { "value": 5904, "code": "湖北省" ,"water":290.3,"load":1248.8},
+  { "value": 6633, "code": "湖南省" ,"water":326.9,"load":1912.4},
+  { "value": 12141, "code": "广东省" ,"water":433.5,"load":1786.6},
+  { "value": 4907, "code": "广西壮族自治区" ,"water":284.9,"load":2388},
+  { "value": 972, "code": "海南省" ,"water":45.6,"load":383.9},
+  { "value": 3144, "code": "重庆市" ,"water":77.4,"load":656.1},
+  { "value": 8289, "code": "四川省" ,"water":268.4,"load":2467.1},
+  { "value": 3803, "code": "贵州省" ,"water":103.5,"load":1051.5},
+  { "value": 4693, "code": "云南省" ,"water":156.6,"load":2202.6},
+  { "value": 349, "code": "西藏自治区" ,"water":31.4,"load":4749.9},
+  { "value": 3904, "code": "陕西省" ,"water":93,"load":449.1},
+  { "value": 2522, "code": "甘肃省" ,"water":116.1,"load":238.9},
+  { "value": 586, "code": "青海省" ,"water":25.8,"load":785.7},
+  { "value": 705, "code": "宁夏回族自治区" ,"water":66.1,"load":10.8},
+  { "value": 2480, "code": "新疆维吾尔自治区" ,"water":552.3,"load":1018.6},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2016":[
+  { "value": 2195, "code": "北京市" ,"water":38.8,"load":35.1},
+  { "value": 1443, "code": "天津市" ,"water":27.2,"load":18.9},
+  { "value": 7375, "code": "河北省" ,"water":182.6,"load":208.3},
+  { "value": 3514, "code": "山西省" ,"water":75.5,"load":134.1},
+  { "value": 2436, "code": "内蒙古自治区" ,"water":190.3,"load":426.5},
+  { "value": 4327, "code": "辽宁省" ,"water":135.4,"load":331.6},
+  { "value": 2567, "code": "吉林省" ,"water":132.5,"load":488.8},
+  { "value": 3463, "code": "黑龙江省" ,"water":352.6,"load":843.7},
+  { "value": 2467, "code": "上海市" ,"water":104.8,"load":61},
+  { "value": 8381, "code": "江苏省" ,"water":577.4,"load":741.7},
+  { "value": 6072, "code": "浙江省" ,"water":181.1,"load":1323.3},
+  { "value": 6033, "code": "安徽省" ,"water":290.7,"load":1245.2},
+  { "value": 4016, "code": "福建省" ,"water":189.1,"load":2109},
+  { "value": 4496, "code": "江西省" ,"water":245.4,"load":2221.1},
+  { "value": 9973, "code": "山东省" ,"water":214,"load":220.3},
+  { "value": 9778, "code": "河南省" ,"water":227.6,"load":337.3},
+  { "value": 5885, "code": "湖北省" ,"water":282,"load":1498},
+  { "value": 6625, "code": "湖南省" ,"water":330.4,"load":2196.6},
+  { "value": 11908, "code": "广东省" ,"water":435,"load":2458.6},
+  { "value": 4857, "code": "广西壮族自治区" ,"water":290.6,"load":2178.6},
+  { "value": 957, "code": "海南省" ,"water":45,"load":489.9},
+  { "value": 3110, "code": "重庆市" ,"water":77.5,"load":604.9},
+  { "value": 8251, "code": "四川省" ,"water":267.3,"load":2340.9},
+  { "value": 3758, "code": "贵州省" ,"water":100.3,"load":1066.1},
+  { "value": 4677, "code": "云南省" ,"water":150.2,"load":2088.9},
+  { "value": 340, "code": "西藏自治区" ,"water":31.1,"load":4642.2},
+  { "value": 3874, "code": "陕西省" ,"water":90.8,"load":271.5},
+  { "value": 2520, "code": "甘肃省" ,"water":118.4,"load":168.4},
+  { "value": 582, "code": "青海省" ,"water":26.4,"load":612.7},
+  { "value": 695, "code": "宁夏回族自治区" ,"water":64.9,"load":9.6},
+  { "value": 2428, "code": "新疆维吾尔自治区" ,"water":565.4,"load":1093.4},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2015":[
+  { "value": 2188, "code": "北京市" ,"water":38.2,"load":26.8},
+  { "value": 1439, "code": "天津市" ,"water":25.7,"load":12.8},
+  { "value": 7345, "code": "河北省" ,"water":187.2,"load":135.1},
+  { "value": 3519, "code": "山西省" ,"water":73.6,"load":94},
+  { "value": 2440, "code": "内蒙古自治区" ,"water":185.8,"load":537},
+  { "value": 4338, "code": "辽宁省" ,"water":140.8,"load":179},
+  { "value": 2613, "code": "吉林省" ,"water":133.6,"load":331.3},
+  { "value": 3529, "code": "黑龙江省" ,"water":355.3,"load":814.1},
+  { "value": 2458, "code": "上海市" ,"water":103.8,"load":64.1},
+  { "value": 8315, "code": "江苏省" ,"water":574.5,"load":582.1},
+  { "value": 5985, "code": "浙江省" ,"water":186.1,"load":1407.1},
+  { "value": 6011, "code": "安徽省" ,"water":288.7,"load":914.1},
+  { "value": 3984, "code": "福建省" ,"water":201.3,"load":1325.9},
+  { "value": 4485, "code": "江西省" ,"water":245.8,"load":2001.2},
+  { "value": 9866, "code": "山东省" ,"water":212.8,"load":168.4},
+  { "value": 9701, "code": "河南省" ,"water":222.8,"load":287.2},
+  { "value": 5850, "code": "湖北省" ,"water":301.3,"load":1015.6},
+  { "value": 6615, "code": "湖南省" ,"water":330.4,"load":1919.3},
+  { "value": 11678, "code": "广东省" ,"water":443.1,"load":1933.4},
+  { "value": 4811, "code": "广西壮族自治区" ,"water":299.3,"load":2433.6},
+  { "value": 945, "code": "海南省" ,"water":45.8,"load":198.2},
+  { "value": 3070, "code": "重庆市" ,"water":79,"load":456.2},
+  { "value": 8196, "code": "四川省" ,"water":265.5,"load":2220.5},
+  { "value": 3708, "code": "贵州省" ,"water":97.5,"load":1153.7},
+  { "value": 4663, "code": "云南省" ,"water":150.1,"load":1871.9},
+  { "value": 330, "code": "西藏自治区" ,"water":30.8,"load":3853},
+  { "value": 3846, "code": "陕西省" ,"water":91.2,"load":333.4},
+  { "value": 2523, "code": "甘肃省" ,"water":119.2,"load":164.8},
+  { "value": 577, "code": "青海省" ,"water":26.8,"load":589.3},
+  { "value": 684, "code": "宁夏回族自治区" ,"water":70.4,"load":9.2},
+  { "value": 2385, "code": "新疆维吾尔自治区" ,"water":577.2,"load":930.3},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2014":[
+  { "value": 2171, "code": "北京市" ,"water":37.5,"load":20.3},
+  { "value": 1429, "code": "天津市" ,"water":24.1,"load":11.4},
+  { "value": 7323, "code": "河北省" ,"water":192.8,"load":106.2},
+  { "value": 3528, "code": "山西省" ,"water":71.4,"load":111},
+  { "value": 2449, "code": "内蒙古自治区" ,"water":182,"load":537.8},
+  { "value": 4358, "code": "辽宁省" ,"water":141.8,"load":145.9},
+  { "value": 2642, "code": "吉林省" ,"water":133,"load":306},
+  { "value": 3608, "code": "黑龙江省" ,"water":364.1,"load":944.3},
+  { "value": 2467, "code": "上海市" ,"water":105.9,"load":47.1},
+  { "value": 8281, "code": "江苏省" ,"water":591.3,"load":399.3},
+  { "value": 5890, "code": "浙江省" ,"water":192.9,"load":1132.1},
+  { "value": 5997, "code": "安徽省" ,"water":272.1,"load":778.5},
+  { "value": 3945, "code": "福建省" ,"water":205.6,"load":1219.6},
+  { "value": 4480, "code": "江西省" ,"water":259.3,"load":1631.8},
+  { "value": 9808, "code": "山东省" ,"water":214.5,"load":148.4},
+  { "value": 9645, "code": "河南省" ,"water":209.3,"load":283.4},
+  { "value": 5816, "code": "湖北省" ,"water":288.3,"load":914.3},
+  { "value": 6611, "code": "湖南省" ,"water":332.4,"load":1799.4},
+  { "value": 11489, "code": "广东省" ,"water":442.5,"load":1718.4},
+  { "value": 4770, "code": "广西壮族自治区" ,"water":307.6,"load":1990.9},
+  { "value": 936, "code": "海南省" ,"water":45,"load":383.5},
+  { "value": 3043, "code": "重庆市" ,"water":80.5,"load":642.6},
+  { "value": 8139, "code": "四川省" ,"water":236.9,"load":2557.7},
+  { "value": 3677, "code": "贵州省" ,"water":95.3,"load":1213.1},
+  { "value": 4653, "code": "云南省" ,"water":149.4,"load":1726.6},
+  { "value": 325, "code": "西藏自治区" ,"water":30.5,"load":4416.3},
+  { "value": 3827, "code": "陕西省" ,"water":89.8,"load":351.6},
+  { "value": 2531, "code": "甘肃省" ,"water":120.6,"load":198.4},
+  { "value": 576, "code": "青海省" ,"water":26.3,"load":793.9},
+  { "value": 678, "code": "宁夏回族自治区" ,"water":70.3,"load":10.1},
+  { "value": 2325, "code": "新疆维吾尔自治区" ,"water":581.8,"load":726.9},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0}
+],
+"2013":[
+    { "value": 2125, "code": "北京市" ,"water":36.4,"load":24.8},
+    { "value": 1410, "code": "天津市" ,"water":23.8,"load":14.6},
+    { "value": 7288, "code": "河北省" ,"water":191.3,"load":175.9},
+    { "value": 3535, "code": "山西省" ,"water":73.8,"load":126.6},
+    { "value": 2455, "code": "内蒙古自治区" ,"water":183.2,"load":959.8},
+    { "value": 4365, "code": "辽宁省" ,"water":142.1,"load":463.2},
+    { "value": 2668, "code": "吉林省" ,"water":131.5,"load":607.4},
+    { "value": 3666, "code": "黑龙江省" ,"water":362.3,"load":1419.6},
+    { "value": 2448, "code": "上海市" ,"water":123.2,"load":28},
+    { "value": 8192, "code": "江苏省" ,"water":576.7,"load":283.5},
+    { "value": 5784, "code": "浙江省" ,"water":198.3,"load":931.3},
+    { "value": 5988, "code": "安徽省" ,"water":296,"load":585.6},
+    { "value": 3885, "code": "福建省" ,"water":204.8,"load":1151.9},
+    { "value": 4476, "code": "江西省" ,"water":264.8,"load":1424},
+    { "value": 9746, "code": "山东省" ,"water":217.9,"load":291.7},
+    { "value": 9573, "code": "河南省" ,"water":240.6,"load":213.1},
+    { "value": 5798, "code": "湖北省" ,"water":291.8,"load":790.1},
+    { "value": 6600, "code": "湖南省" ,"water":332.5,"load":1582},
+    { "value": 11270, "code": "广东省" ,"water":443.2,"load":2263.2},
+    { "value": 4731, "code": "广西壮族自治区" ,"water":308.2,"load":2057.3},
+    { "value": 920, "code": "海南省" ,"water":43.2,"load":502.1},
+    { "value": 3011, "code": "重庆市" ,"water":83.9,"load":474.3},
+    { "value": 8109, "code": "四川省" ,"water":242.5,"load":2470.3},
+    { "value": 3632, "code": "贵州省" ,"water":92,"load":759.4},
+    { "value": 4641, "code": "云南省" ,"water":149.7,"load":1706.7},
+    { "value": 317, "code": "西藏自治区" ,"water":30.3,"load":4415.7},
+    { "value": 3804, "code": "陕西省" ,"water":89.2,"load":353.8},
+    { "value": 2537, "code": "甘肃省" ,"water":122,"load":268.9},
+    { "value": 571, "code": "青海省" ,"water":28.2,"load":645.6},
+    { "value": 666, "code": "宁夏回族自治区" ,"water":72.1,"load":11.4},
+    { "value": 2285, "code": "新疆维吾尔自治区" ,"water":588,"load":956},
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2012":[
+    { "value": 2078, "code": "北京市" ,"water":35.9,"load":39.5},
+    { "value": 1378, "code": "天津市" ,"water":23.1,"load":32.9},
+    { "value": 7262, "code": "河北省" ,"water":195.3,"load":235.5},
+    { "value": 3548, "code": "山西省" ,"water":73.4,"load":106.2},
+    { "value": 2464, "code": "内蒙古自治区" ,"water":184.4,"load":510.3},
+    { "value": 4375, "code": "辽宁省" ,"water":142.2,"load":547.3},
+    { "value": 2698, "code": "吉林省" ,"water":129.8,"load":460.5},
+    { "value": 3724, "code": "黑龙江省" ,"water":358.9,"load":841.4},
+    { "value": 2399, "code": "上海市" ,"water":116,"load":33.9},
+    { "value": 8120, "code": "江苏省" ,"water":552.2,"load":373.3},
+    { "value": 5685, "code": "浙江省" ,"water":198.1,"load":1444.8},
+    { "value": 5978, "code": "安徽省" ,"water":292.6,"load":701},
+    { "value": 3841, "code": "福建省" ,"water":200.1,"load":1511.4},
+    { "value": 4475, "code": "江西省" ,"water":242.5,"load":2174.4},
+    { "value": 9708, "code": "山东省" ,"water":221.8,"load":274.3},
+    { "value": 9532, "code": "河南省" ,"water":238.6,"load":265.5},
+    { "value": 5781, "code": "湖北省" ,"water":299.3,"load":813.9},
+    { "value": 6590, "code": "湖南省" ,"water":328.8,"load":1988.9},
+    { "value": 11041, "code": "广东省" ,"water":451,"load":2026.5},
+    { "value": 4694, "code": "广西壮族自治区" ,"water":303,"load":2087.4},
+    { "value": 910, "code": "海南省" ,"water":45.3,"load":364.3},
+    { "value": 2975, "code": "重庆市" ,"water":82.9,"load":476.9},
+    { "value": 8085, "code": "四川省" ,"water":245.9,"load":2892.4},
+    { "value": 3587, "code": "贵州省" ,"water":100.8,"load":974},
+    { "value": 4631, "code": "云南省" ,"water":151.8,"load":1689.8},
+    { "value": 315, "code": "西藏自治区" ,"water":29.8,"load":4196.4},
+    { "value": 3787, "code": "陕西省" ,"water":88,"load":390.5},
+    { "value": 2550, "code": "甘肃省" ,"water":123.1,"load":267},
+    { "value": 571, "code": "青海省" ,"water":27.4,"load":895.2},
+    { "value": 659, "code": "宁夏回族自治区" ,"water":69.4,"load":10.8},
+    { "value": 2253, "code": "新疆维吾尔自治区" ,"water":590.1,"load":900.6},
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2011":[
+  { "value": 2024, "code": "北京市" ,"water":36,"load":26.8},
+  { "value": 1341, "code": "天津市" ,"water":23.1,"load":15.4},
+  { "value": 7232, "code": "河北省" ,"water":196,"load":157.2},
+  { "value": 3562, "code": "山西省" ,"water":74.2,"load":124.3},
+  { "value": 2470, "code": "内蒙古自治区" ,"water":184.7,"load":419},
+  { "value": 4379, "code": "辽宁省" ,"water":144.5,"load":294.8},
+  { "value": 2725, "code": "吉林省" ,"water":131.2,"load":315.9},
+  { "value": 3782, "code": "黑龙江省" ,"water":352.4,"load":629.5},
+  { "value": 2356, "code": "上海市" ,"water":124.5,"load":20.7},
+  { "value": 8023, "code": "江苏省" ,"water":556.2,"load":492.4},
+  { "value": 5570, "code": "浙江省" ,"water":198.5,"load":745},
+  { "value": 5972, "code": "安徽省" ,"water":294.6,"load":602.3},
+  { "value": 3784, "code": "福建省" ,"water":208.8,"load":774.9},
+  { "value": 4474, "code": "江西省" ,"water":262.9,"load":1037.9},
+  { "value": 9665, "code": "山东省" ,"water":224.1,"load":347.6},
+  { "value": 9461, "code": "河南省" ,"water":229.1,"load":328},
+  { "value": 5760, "code": "湖北省" ,"water":296.7,"load":757.5},
+  { "value": 6581, "code": "湖南省" ,"water":326.5,"load":1126.9},
+  { "value": 10756, "code": "广东省" ,"water":464.2,"load":1471.3},
+  { "value": 4655, "code": "广西壮族自治区" ,"water":301.8,"load":1350},
+  { "value": 890, "code": "海南省" ,"water":44.5,"load":484.1},
+  { "value": 2944, "code": "重庆市" ,"water":86.8,"load":514.6},
+  { "value": 8064, "code": "四川省" ,"water":233.5,"load":2239.5},
+  { "value": 3530, "code": "贵州省" ,"water":95.9,"load":626},
+  { "value": 4620, "code": "云南省" ,"water":146.8,"load":1480.2},
+  { "value": 309, "code": "西藏自治区" ,"water":31,"load":4402.7},
+  { "value": 3765, "code": "陕西省" ,"water":87.8,"load":604.4},
+  { "value": 2552, "code": "甘肃省" ,"water":122.9,"load":242.2},
+  { "value": 568, "code": "青海省" ,"water":31.2,"load":733.1},
+  { "value": 648, "code": "宁夏回族自治区" ,"water":73.6,"load":8.8},
+  { "value": 2225, "code": "新疆维吾尔自治区" ,"water":523.5,"load":885.7},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2010":[
+    { "value": 1962, "code": "北京市" ,"water": 35.2, "load": 23.1 },
+    { "value": 1299, "code": "天津市" ,"water": 22.5, "load": 9.2 },
+    { "value": 7194, "code": "河北省" ,"water": 193.7, "load": 138.9 },
+    { "value": 3574, "code": "山西省" ,"water": 63.8, "load": 91.5 },
+    { "value": 2472, "code": "内蒙古自治区" ,"water": 181.9, "load": 388.5 },
+    { "value": 4375, "code": "辽宁省" ,"water": 143.7, "load": 606.7 },
+    { "value": 2747, "code": "吉林省" ,"water": 120, "load": 686.7 },
+    { "value": 3833, "code": "黑龙江省" ,"water": 325, "load": 853.5 },
+    { "value": 2303, "code": "上海市" ,"water": 126.3, "load": 36.8 },
+    { "value": 7869, "code": "江苏省" ,"water": 552.2, "load": 383.5 },
+    { "value": 5447, "code": "浙江省" ,"water": 203, "load": 1398.6 },
+    { "value": 5957, "code": "安徽省" ,"water": 293.1, "load": 922.8 },
+    { "value": 3693, "code": "福建省" ,"water": 202.5, "load": 1652.7 },
+    { "value": 4462, "code": "江西省" ,"water": 239.7, "load": 2275.5 },
+    { "value": 9588, "code": "山东省" ,"water": 222.5, "load": 309.1 },
+    { "value": 9405, "code": "河南省" ,"water": 224.6, "load": 534.9 },
+    { "value": 5728, "code": "湖北省" ,"water": 288, "load": 1268.7 },
+    { "value": 6570, "code": "湖南省" ,"water": 325.2, "load": 1906.6 },
+    { "value": 10441, "code": "广东省" ,"water": 469, "load": 1998.8 },
+    { "value": 4610, "code": "广西壮族自治区" ,"water": 301.6, "load": 1823.6 },
+    { "value": 869, "code": "海南省" ,"water": 44.4, "load": 479.8 },
+    { "value": 2885, "code": "重庆市" ,"water": 86.4, "load": 464.3 },
+    { "value": 8045, "code": "四川省" ,"water": 230.3, "load": 2575.3 },
+    { "value": 3479, "code": "贵州省" ,"water": 101.4, "load": 956.5 },
+    { "value": 4602, "code": "云南省" ,"water": 147.5, "load": 1941.4 },
+    { "value": 300, "code": "西藏自治区" ,"water": 35.2, "load": 4593 },
+    { "value": 3735, "code": "陕西省" ,"water": 83.4, "load": 507.5 },
+    { "value": 2560, "code": "甘肃省" ,"water": 121.8, "load": 215.2 },
+    { "value": 563, "code": "青海省" ,"water": 30.8, "load": 741.1 },
+    { "value": 633, "code": "宁夏回族自治区" ,"water": 72.4, "load": 9.3 },
+    { "value": 2185, "code": "新疆维吾尔自治区" ,"water": 535.1, "load": 1113.1 } ,
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }   
+],
+"2009":[
+    { "value": 1860, "code": "北京市" ,"water": 35.5, "load": 21.8 },
+    { "value": 1228, "code": "天津市" ,"water": 23.4, "load": 15.2 },
+    { "value": 7034, "code": "河北省" ,"water": 193.7, "load": 141.2 },
+    { "value": 3427, "code": "山西省" ,"water": 56.3, "load": 85.8 },
+    { "value": 2458, "code": "内蒙古自治区" ,"water": 181.3, "load": 378.1 },
+    { "value": 4341, "code": "辽宁省" ,"water": 142.8, "load": 171 },
+    { "value": 2740, "code": "吉林省" ,"water": 111.1, "load": 298 },
+    { "value": 3826, "code": "黑龙江省" ,"water": 316.3, "load": 989.6 },
+    { "value": 2210, "code": "上海市" ,"water": 125.2, "load": 41.6 },
+    { "value": 7810, "code": "江苏省" ,"water": 549.2, "load": 400.3 },
+    { "value": 5276, "code": "浙江省" ,"water": 197.8, "load": 931.3 },
+    { "value": 6131, "code": "安徽省" ,"water": 291.9, "load": 733.1 },
+    { "value": 3666, "code": "福建省" ,"water": 201.4, "load": 800.8 },
+    { "value": 4432, "code": "江西省" ,"water": 241.3, "load": 1166.9 },
+    { "value": 9470, "code": "山东省" ,"water": 220, "load": 285 },
+    { "value": 9487, "code": "河南省" ,"water": 233.7, "load": 328.8 },
+    { "value": 5720, "code": "湖北省" ,"water": 281.4, "load": 825.3 },
+    { "value": 6406, "code": "湖南省" ,"water": 322.3, "load": 1400.5 },
+    { "value": 10130, "code": "广东省" ,"water": 463.4, "load": 1613.7 },
+    { "value": 4856, "code": "广西壮族自治区" ,"water": 303.4, "load": 1484.3 },
+    { "value": 864, "code": "海南省" ,"water": 44.5, "load": 480.7 },
+    { "value": 2859, "code": "重庆市" ,"water": 85.3, "load": 455.9 },
+    { "value": 8185, "code": "四川省" ,"water": 223.5, "load": 2332.2 },
+    { "value": 3537, "code": "贵州省" ,"water": 100.4, "load": 910 },
+    { "value": 4571, "code": "云南省" ,"water": 152.6, "load": 1576.6 },
+    { "value": 296, "code": "西藏自治区" ,"water": 30.9, "load": 4029.2 },
+    { "value": 3727, "code": "陕西省" ,"water": 84.3, "load": 416.5 },
+    { "value": 2555, "code": "甘肃省" ,"water": 120.6, "load": 209 },
+    { "value": 557, "code": "青海省" ,"water": 28.8, "load": 895.1 },
+    { "value": 625, "code": "宁夏回族自治区" ,"water": 72.2, "load": 8.4 },
+    { "value": 2159, "code": "新疆维吾尔自治区" ,"water": 530.9, "load": 754.3 },
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2008":[
+    { "value": 1771, "code": "北京市" ,"water": 35.1, "load": 34.2 },
+    { "value": 1176, "code": "天津市" ,"water": 22.3, "load": 18.3 },
+    { "value": 6989, "code": "河北省" ,"water": 195, "load": 161 },
+    { "value": 3411, "code": "山西省" ,"water": 56.9, "load": 87.4 },
+    { "value": 2444, "code": "内蒙古自治区" ,"water": 175.8, "load": 412.1 },
+    { "value": 4315, "code": "辽宁省" ,"water": 142.8, "load": 266 },
+    { "value": 2734, "code": "吉林省" ,"water": 104.1, "load": 332 },
+    { "value": 3825, "code": "黑龙江省" ,"water": 297, "load": 462 },
+    { "value": 2141, "code": "上海市" ,"water": 119.8, "load": 37 },
+    { "value": 7762, "code": "江苏省" ,"water": 558.3, "load": 378 },
+    { "value": 5212, "code": "浙江省" ,"water": 216.6, "load": 855.2 },
+    { "value": 6135, "code": "安徽省" ,"water": 266.4, "load": 699.3 },
+    { "value": 3639, "code": "福建省" ,"water": 198, "load": 1036.9 },
+    { "value": 4400, "code": "江西省" ,"water": 234.2, "load": 1356.2 },
+    { "value": 9417, "code": "山东省" ,"water": 219.9, "load": 328.7 },
+    { "value": 9429, "code": "河南省" ,"water": 227.5, "load": 371.3 },
+    { "value": 5711, "code": "湖北省" ,"water": 270.7, "load": 1033.9 },
+    { "value": 6380, "code": "湖南省" ,"water": 323.6, "load": 1600 },
+    { "value": 9893, "code": "广东省" ,"water": 461.5, "load": 2206.8 },
+    { "value": 4816, "code": "广西壮族自治区" ,"water": 310.1, "load": 2282.5 },
+    { "value": 854, "code": "海南省" ,"water": 46.9, "load": 419.1 },
+    { "value": 2839, "code": "重庆市" ,"water": 82.8, "load": 576.9 },
+    { "value": 8138, "code": "四川省" ,"water": 207.6, "load": 2489.9 },
+    { "value": 3596, "code": "贵州省" ,"water": 101.9, "load": 1140.7 },
+    { "value": 4543, "code": "云南省" ,"water": 153.1, "load": 2314.5 },
+    { "value": 292, "code": "西藏自治区" ,"water": 37.5, "load": 4560.2 },
+    { "value": 3718, "code": "陕西省" ,"water": 85.5, "load": 304 },
+    { "value": 2551, "code": "甘肃省" ,"water": 122.2, "load": 187.5 },
+    { "value": 554, "code": "青海省" ,"water": 34.4, "load": 658.1 },
+    { "value": 618, "code": "宁夏回族自治区" ,"water": 74.2, "load": 9.2 },
+    { "value": 2131, "code": "新疆维吾尔自治区" ,"water": 528.2, "load": 815.6 },
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2007":[
+    { "value": 1676, "code": "北京市" ,"water": 34.8, "load": 23.8 },
+    { "value": 1115, "code": "天津市" ,"water": 23.4, "load": 11.3 },
+    { "value": 6943, "code": "河北省" ,"water": 202.5, "load": 119.8 },
+    { "value": 3393, "code": "山西省" ,"water": 58.7, "load": 103.4 },
+    { "value": 2429, "code": "内蒙古自治区" ,"water": 180, "load": 295.9 },
+    { "value": 4298, "code": "辽宁省" ,"water": 142.9, "load": 261.7 },
+    { "value": 2730, "code": "吉林省" ,"water": 100.8, "load": 346 },
+    { "value": 3824, "code": "黑龙江省" ,"water": 291.4, "load": 491.8 },
+    { "value": 2064, "code": "上海市" ,"water": 120.2, "load": 34.5 },
+    { "value": 7723, "code": "江苏省" ,"water": 558.3, "load": 495.7 },
+    { "value": 5155, "code": "浙江省" ,"water": 211, "load": 892.1 },
+    { "value": 6118, "code": "安徽省" ,"water": 232.1, "load": 712.5 },
+    { "value": 3612, "code": "福建省" ,"water": 196.3, "load": 1072.9 },
+    { "value": 4368, "code": "江西省" ,"water": 234.9, "load": 1113 },
+    { "value": 9367, "code": "山东省" ,"water": 219.5, "load": 387.1 },
+    { "value": 9360, "code": "河南省" ,"water": 209.3, "load": 465.2 },
+    { "value": 5699, "code": "湖北省" ,"water": 258.7, "load": 1015.1 },
+    { "value": 6355, "code": "湖南省" ,"water": 324.3, "load": 1426.5 },
+    { "value": 9660, "code": "广东省" ,"water": 462.5, "load": 1581.2 },
+    { "value": 4768, "code": "广西壮族自治区" ,"water": 310.4, "load": 1386.3 },
+    { "value": 845, "code": "海南省" ,"water": 46.7, "load": 283.5 },
+    { "value": 2816, "code": "重庆市" ,"water": 77.4, "load": 663 },
+    { "value": 8127, "code": "四川省" ,"water": 214, "load": 2299.8 },
+    { "value": 3632, "code": "贵州省" ,"water": 98, "load": 1054.6 },
+    { "value": 4514, "code": "云南省" ,"water": 150, "load": 2255.5 },
+    { "value": 289, "code": "西藏自治区" ,"water": 36.7, "load": 4321.4 },
+    { "value": 3708, "code": "陕西省" ,"water": 81.5, "load": 377 },
+    { "value": 2548, "code": "甘肃省" ,"water": 122.5, "load": 228.7 },
+    { "value": 552, "code": "青海省" ,"water": 31.1, "load": 661.6 },
+    { "value": 610, "code": "宁夏回族自治区" ,"water": 71, "load": 10.4 },
+    { "value": 2095, "code": "新疆维吾尔自治区" ,"water": 517.7, "load": 863.8 },
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2006":[
+  { "value": 1601, "code": "北京市" ,"water": 34.3, "load": 22.1 },
+  { "value": 1075, "code": "天津市" ,"water": 23, "load": 10.1 },
+  { "value": 6898, "code": "河北省" ,"water": 204, "load": 107.3 },
+  { "value": 3375, "code": "山西省" ,"water": 59.3, "load": 88.5 },
+  { "value": 2415, "code": "内蒙古自治区" ,"water": 178.7, "load": 411.3 },
+  { "value": 4271, "code": "辽宁省" ,"water": 141.2, "load": 261.4 },
+  { "value": 2723, "code": "吉林省" ,"water": 102.9, "load": 353.6 },
+  { "value": 3823, "code": "黑龙江省" ,"water": 286.2, "load": 727.9 },
+  { "value": 1964, "code": "上海市" ,"water": 118.6, "load": 27.6 },
+  { "value": 7656, "code": "江苏省" ,"water": 546.4, "load": 404.4 },
+  { "value": 5072, "code": "浙江省" ,"water": 208.3, "load": 903.6 },
+  { "value": 6110, "code": "安徽省" ,"water": 241.9, "load": 580.5 },
+  { "value": 3585, "code": "福建省" ,"water": 187.3, "load": 1623.5 },
+  { "value": 4339, "code": "江西省" ,"water": 205.7, "load": 1630 },
+  { "value": 9309, "code": "山东省" ,"water": 225.8, "load": 199.3 },
+  { "value": 9392, "code": "河南省" ,"water": 227, "load": 321.8 },
+  { "value": 5693, "code": "湖北省" ,"water": 258.8, "load": 639.7 },
+  { "value": 6342, "code": "湖南省" ,"water": 327.7, "load": 1770.3 },
+  { "value": 9442, "code": "广东省" ,"water": 459.4, "load": 2216.2 },
+  { "value": 4719, "code": "广西壮族自治区" ,"water": 314.4, "load": 1881.1 },
+  { "value": 836, "code": "海南省" ,"water": 46.5, "load": 227.6 },
+  { "value": 2808, "code": "重庆市" ,"water": 73.2, "load": 380.3 },
+  { "value": 8169, "code": "四川省" ,"water": 215.1, "load": 1865.8 },
+  { "value": 3690, "code": "贵州省" ,"water": 100, "load": 814.6 },
+  { "value": 4483, "code": "云南省" ,"water": 144.8, "load": 1711.7 },
+  { "value": 285, "code": "西藏自治区" ,"water": 35, "load": 4157.1 },
+  { "value": 3699, "code": "陕西省" ,"water": 84.1, "load": 275.5 },
+  { "value": 2547, "code": "甘肃省" ,"water": 122.3, "load": 184.6 },
+  { "value": 548, "code": "青海省" ,"water": 32.2, "load": 569 },
+  { "value": 604, "code": "宁夏回族自治区" ,"water": 77.6, "load": 10.6 },
+  { "value": 2050, "code": "新疆维吾尔自治区" ,"water": 513.4, "load": 953.1 },
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2005":[
+{ "value": 1538, "code": "北京市" ,"water": 34.5, "load": 23.2 },
+  { "value": 1043, "code": "天津市" ,"water": 23.1, "load": 10.6 },
+  { "value": 6851, "code": "河北省" ,"water": 201.8, "load": 134.6 },
+  { "value": 3355, "code": "山西省" ,"water": 55.7, "load": 84.1 },
+  { "value": 2403, "code": "内蒙古自治区" ,"water": 174.8, "load": 456.2 },
+  { "value": 4221, "code": "辽宁省" ,"water": 133.3, "load": 377.2 },
+  { "value": 2716, "code": "吉林省" ,"water": 98.4, "load": 559.7 },
+  { "value": 3820, "code": "黑龙江省" ,"water": 271.5, "load": 744.3 },
+  { "value": 1890, "code": "上海市" ,"water": 121.3, "load": 24.5 },
+  { "value": 7588, "code": "江苏省" ,"water": 519.7, "load": 467 },
+  { "value": 4991, "code": "浙江省" ,"water": 209.9, "load": 1014.4 },
+  { "value": 6120, "code": "安徽省" ,"water": 208, "load": 719.3 },
+  { "value": 3557, "code": "福建省" ,"water": 186.9, "load": 1401.1 },
+  { "value": 4311, "code": "江西省" ,"water": 208.1, "load": 1510.1 },
+  { "value": 9248, "code": "山东省" ,"water": 211, "load": 415.9 },
+  { "value": 9380, "code": "河南省" ,"water": 197.8, "load": 558.5 },
+  { "value": 5710, "code": "湖北省" ,"water": 253.4, "load": 934 },
+  { "value": 6326, "code": "湖南省" ,"water": 328.4, "load": 1671 },
+  { "value": 9194, "code": "广东省" ,"water": 459, "load": 1747.5 },
+  { "value": 4660, "code": "广西壮族自治区" ,"water": 312.9, "load": 1720.8 },
+  { "value": 828, "code": "海南省" ,"water": 44.1, "load": 307.3 },
+  { "value": 2798, "code": "重庆市" ,"water": 71.2, "load": 509.8 },
+  { "value": 8212, "code": "四川省" ,"water": 212.3, "load": 2922.6 },
+  { "value": 3730, "code": "贵州省" ,"water": 97.2, "load": 834.6 },
+  { "value": 4450, "code": "云南省" ,"water": 146.8, "load": 1846.4 },
+  { "value": 280, "code": "西藏自治区" ,"water": 33.2, "load": 4451.1 },
+  { "value": 3690, "code": "陕西省" ,"water": 78.8, "load": 490.6 },
+  { "value": 2545, "code": "甘肃省" ,"water": 123, "load": 269.6 },
+  { "value": 543, "code": "青海省" ,"water": 30.7, "load": 876.1 },
+  { "value": 596, "code": "宁夏回族自治区" ,"water": 78.1, "load": 8.5 },
+  { "value": 2010, "code": "新疆维吾尔自治区" ,"water": 508.5, "load": 962.8 },
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+  
+],
+  "2004": [
+  { "value": 1493, "code": "北京市" ,"water": 34.6, "load": 21.3},
+{ "value": 1024, "code": "天津市" ,"water": 22.1, "load": 14.3 },
+{ "value": 6809, "code": "河北省" ,"water": 195.9, "load": 154.2 },
+{ "value": 3335, "code": "山西省" ,"water": 55.9, "load": 92.5 },
+{ "value": 2393, "code": "内蒙古自治区" ,"water": 171.5, "load": 437.6 },
+{ "value": 4217, "code": "辽宁省" ,"water": 130.2, "load": 285.7 },
+{ "value": 2709, "code": "吉林省" ,"water": 99.2, "load": 323.7 },
+{ "value": 3817, "code": "黑龙江省" ,"water": 259.4, "load": 652.1 },
+{ "value": 1835, "code": "上海市" ,"water": 118.1, "load": 25 },
+{ "value": 7523, "code": "江苏省" ,"water": 525.6, "load": 204 },
+{ "value": 4925, "code": "浙江省" ,"water": 207.8, "load": 675.7 },
+{ "value": 6228, "code": "安徽省" ,"water": 209.7, "load": 500.7 },
+{ "value": 3529, "code": "福建省" ,"water": 184.9, "load": 712.2 },
+{ "value": 4284, "code": "江西省" ,"water": 203.5, "load": 1034.6 },
+{ "value": 9180, "code": "山东省" ,"water": 214.9, "load": 349.5 },
+{ "value": 9717, "code": "河南省" ,"water": 200.7, "load": 406.6 },
+{ "value": 5698, "code": "湖北省" ,"water": 242.7, "load": 926.4 },
+{ "value": 6698, "code": "湖南省" ,"water": 323.6, "load": 1641.3 },
+{ "value": 9111, "code": "广东省" ,"water": 464.8, "load": 1187.7 },
+{ "value": 4889, "code": "广西壮族自治区" ,"water": 290.8, "load": 1604.5 },
+{ "value": 818, "code": "海南省" ,"water": 46.3, "load": 171.1 },
+{ "value": 2793, "code": "重庆市" ,"water": 67.5, "load": 558.8 },
+{ "value": 8090, "code": "四川省" ,"water": 210.4, "load": 2434.2 },
+{ "value": 3904, "code": "贵州省" ,"water": 94.3, "load": 991 },
+{ "value": 4415, "code": "云南省" ,"water": 146.9, "load": 2106.3 },
+{ "value": 276, "code": "西藏自治区" ,"water": 28, "load": 4665.2 },
+{ "value": 3681, "code": "陕西省" ,"water": 75.5, "load": 309.4 },
+{ "value": 2541, "code": "甘肃省" ,"water": 121.8, "load": 171.9 },
+{ "value": 539, "code": "青海省" ,"water": 30.2, "load": 606.8 },
+{ "value": 588, "code": "宁夏回族自治区" ,"water": 74, "load": 9.9 },
+{ "value": 1963, "code": "新疆维吾尔自治区" ,"water": 497.1, "load": 855.4 },
+{ "value": 0, "code": "台湾" ,"water":0,"load":0},
+{ "value": 0, "code": "澳门" ,"water":0,"load":0},
+{ "value": 0, "code": "香港" ,"water":0,"load":0 }
+]
+
+  }
+  return data[year];  
+}
+function getDataSource(year) {
+  var data = {
+  "2022":[
+      { "value": 2184, "code": "北京市" ,"water":40,"load":23.7},
+      { "value": 1363, "code": "天津市" ,"water":33.6,"load": 16.6},
+      { "value": 7420, "code": "河北省" ,"water":182.4,"load":188},
+      { "value": 3481, "code": "山西省" ,"water":72.1,"load":153.5},
+      { "value": 2401, "code": "内蒙古自治区" ,"water":191.5,"load":509.2},
+      { "value": 4197, "code": "辽宁省" ,"water":126,"load":561.7},
+      { "value": 2348, "code": "吉林省" ,"water":104.5,"load":705.1},
+      { "value": 3099, "code": "黑龙江省" ,"water":307.7,"load":918.5},
+      { "value": 2475, "code": "上海市" ,"water":105.7,"load":33.1},
+      { "value": 8515, "code": "江苏省" ,"water":611.8,"load":192.8},
+      { "value": 6577, "code": "浙江省" ,"water":167.8,"load":934.3},
+      { "value": 6127, "code": "安徽省" ,"water":300.5,"load":545.2},
+      { "value": 4188, "code": "福建省" ,"water":167.9,"load":1174.7},
+      { "value": 4528, "code": "江西省" ,"water":269.8,"load":1556.2},
+      { "value": 10163, "code": "山东省" ,"water":217,"load":508.9},
+      { "value": 9872, "code": "河南省" ,"water":228,"load":249.4},
+      { "value": 5844, "code": "湖北省" ,"water":353.1,"load":714.2},
+      { "value": 6604, "code": "湖南省" ,"water":331,"load":1683.8},
+      { "value": 12657, "code": "广东省" ,"water":401.7,"load":2223.6},
+      { "value": 5047, "code": "广西壮族自治区" ,"water":264,"load":2208.5},
+      { "value": 1027, "code": "海南省" ,"water":45.6,"load":363.8},
+      { "value": 3213, "code": "重庆市" ,"water":68.8,"load":373.5},
+      { "value": 8374, "code": "四川省" ,"water":251.6,"load":2209.2},
+      { "value": 3856, "code": "贵州省" ,"water":96.3,"load":912.4},
+      { "value": 4693, "code": "云南省" ,"water":163.4,"load":1742.8},
+      { "value": 364, "code": "西藏自治区" ,"water":31.8,"load":4139.7},
+      { "value": 3956, "code": "陕西省" ,"water":94.9,"load":365.8},
+      { "value": 2492, "code": "甘肃省" ,"water":112.9,"load":231},
+      { "value": 595, "code": "青海省" ,"water":24.5,"load":725.7},
+      { "value": 728, "code": "宁夏回族自治区" ,"water":66.3,"load":8.9},
+      { "value": 2587, "code": "新疆维吾尔自治区" ,"water":566.4,"load":914.1},
+      { "value": 0, "code": "台湾" ,"water":0,"load":0},
+      { "value": 0, "code": "澳门" ,"water":0,"load":0},
+      { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+  ],
+  "2021":[
+    {"value": 2189, "code": "北京市", "water": 40.8, "load": 61.3},
+    {"value": 1373, "code": "天津市", "water": 32.3, "load": 39.8},
+    {"value": 7448, "code": "河北省", "water": 181.9, "load": 376.6},
+    {"value": 3480, "code": "山西省", "water": 72.6, "load": 207.9},
+    {"value": 2400, "code": "内蒙古自治区", "water": 191.7, "load": 942.9},
+    {"value": 4229, "code": "辽宁省", "water": 129, "load": 511.7},
+    {"value": 2375, "code": "吉林省", "water": 110.2, "load": 459.2},
+    {"value": 3125, "code": "黑龙江省", "water": 324.5, "load": 1196.3},
+    {"value": 2489, "code": "上海市", "water": 105.8, "load": 53.9},
+    {"value": 8505, "code": "江苏省", "water": 567.5, "load": 500.8},
+    {"value": 6540, "code": "浙江省", "water": 166.4, "load": 1344.7},
+    {"value": 6113, "code": "安徽省", "water": 271.7, "load": 883.3},
+    {"value": 4187, "code": "福建省", "water": 182.6, "load": 758.7},
+    {"value": 4517, "code": "江西省", "water": 249.4, "load": 1419.7},
+    {"value": 10170, "code": "山东省", "water": 210.1, "load": 525.3},
+    {"value": 9883, "code": "河南省", "water": 222.9, "load": 689.2},
+    {"value": 5830, "code": "湖北省", "water": 336.1, "load": 1188.8},
+    {"value": 6622, "code": "湖南省", "water": 322.4, "load": 1790.6},
+    {"value": 12684, "code": "广东省", "water": 407, "load": 1221.2},
+    {"value": 5037, "code": "广西壮族自治区", "water": 268.5, "load": 1541.2},
+    {"value": 1020, "code": "海南省", "water": 45, "load": 341.6},
+    {"value": 3212, "code": "重庆市", "water": 72.1, "load": 750.8},
+    {"value": 8372, "code": "四川省", "water": 244.3, "load": 2924.5},
+    {"value": 3852, "code": "贵州省", "water": 104.1, "load": 1091.4},
+    {"value": 4690, "code": "云南省", "water": 160.3, "load": 1615.8},
+    {"value": 366, "code": "西藏自治区", "water": 32.4, "load": 4408.9},
+    {"value": 3954, "code": "陕西省", "water": 91.8, "load": 852.5},
+    {"value": 2490, "code": "甘肃省", "water": 110.1, "load": 279},
+    {"value": 594, "code": "青海省", "water": 24.5, "load": 842.2},
+    {"value": 725, "code": "宁夏回族自治区", "water": 68.1, "load": 9.3},
+    {"value": 2589, "code": "新疆维吾尔自治区", "water": 573.9, "load": 809},
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+  ],
+  "2020":[
+{"value": 2189, "code": "北京市","water": 40.6,"load": 25.8},
+{"value": 1387, "code": "天津市", "water": 27.8, "load": 13.3},
+{"value": 7464, "code": "河北省", "water": 182.8, "load": 146.3},
+{"value": 3490, "code": "山西省", "water": 72.8, "load": 115.2},
+{"value": 2403, "code": "内蒙古自治区", "water": 194.4, "load": 503.9},
+{"value": 4255, "code": "辽宁省", "water": 129.3, "load": 397.1},
+{"value": 2399, "code": "吉林省", "water": 117.7, "load": 586.2},
+{"value": 3171, "code": "黑龙江省", "water": 314.1, "load": 1419.9},
+{"value": 2488, "code": "上海市", "water": 97.5, "load": 58.6},
+{"value": 8477, "code": "江苏省", "water": 572, "load": 543.4},
+{"value": 6468, "code": "浙江省", "water": 163.9, "load": 1026.6},
+{"value": 6105, "code": "安徽省", "water": 268.3, "load": 1280.4},
+{"value": 4161, "code": "福建省", "water": 183, "load": 760.3},
+{"value": 4519, "code": "江西省", "water": 244.1, "load": 1685.6},
+{"value": 10165, "code": "山东省", "water": 222.5, "load": 375.3},
+{"value": 9941, "code": "河南省", "water": 237.1, "load": 408.6},
+{"value": 5745, "code": "湖北省", "water": 278.9, "load": 1754.7},
+{"value": 6645, "code": "湖南省", "water": 305.1, "load": 2118.9},
+{"value": 12624, "code": "广东省", "water": 405.1, "load": 1626},
+{"value": 5019, "code": "广西壮族自治区", "water": 261.1, "load": 2114.8},
+{"value": 1012, "code": "海南省", "water": 44, "load": 263.6},
+{"value": 3209, "code": "重庆市", "water": 70.1, "load": 766.9},
+{"value": 8371, "code": "四川省", "water": 236.9, "load": 3237.3},
+{"value": 3858, "code": "贵州省", "water": 90.1, "load": 1328.6},
+{"value": 4722, "code": "云南省", "water": 156, "load": 1799.2},
+{"value": 366, "code": "西藏自治区", "water": 32.2, "load": 4597.3},
+{"value": 3955, "code": "陕西省", "water": 90.6, "load": 419.6},
+{"value": 2501, "code": "甘肃省", "water": 109.9, "load": 408},
+{"value": 593, "code": "青海省", "water": 24.3, "load": 1011.9},
+{"value": 721, "code": "宁夏回族自治区", "water": 70.2, "load": 11},
+{"value": 2590, "code": "新疆省", "water": 570.4, "load": 801},
+{ "value": 0, "code": "台湾" ,"water":0,"load":0},
+{ "value": 0, "code": "澳门" ,"water":0,"load":0},
+{ "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2019":[
+  { "value": 2190, "code": "北京市" ,"water":41.7,"load":24.6},
+  { "value": 1385, "code": "天津市" ,"water":28.4,"load":8.1},
+  { "value": 7447, "code": "河北省" ,"water":182.3,"load":113.5},
+  { "value": 3497, "code": "山西省" ,"water":76,"load":97.3},
+  { "value": 2415, "code": "内蒙古自治区" ,"water":190.9,"load":447.9},
+  { "value": 4277, "code": "辽宁省" ,"water":130.3,"load":256},
+  { "value": 2448, "code": "吉林省" ,"water":115.4,"load":506.1},
+  { "value": 3255, "code": "黑龙江省" ,"water":310.4,"load":1511.4},
+  { "value": 2481, "code": "上海市" ,"water":100.9,"load":48.3},
+  { "value": 8469, "code": "江苏省" ,"water":619.1,"load":231.7},
+  { "value": 6375, "code": "浙江省" ,"water":165.8,"load":1321.5},
+  { "value": 6092, "code": "安徽省" ,"water":277.7,"load":539.9},
+  { "value": 4137, "code": "福建省" ,"water":177.5,"load":1363.9},
+  { "value": 4516, "code": "江西省" ,"water":253.3,"load":2051.6},
+  { "value": 10106, "code": "山东省" ,"water":225.3,"load":195.2},
+  { "value": 9901, "code": "河南省" ,"water":237.8,"load":168.6},
+  { "value": 5927, "code": "湖北省" ,"water":303.2,"load":613.7},
+  { "value": 6640, "code": "湖南省" ,"water":333,"load":2098.3},
+  { "value": 12489, "code": "广东省" ,"water":412.3,"load":2068.2},
+  { "value": 4982, "code": "广西壮族自治区" ,"water":283.4,"load":2105.1},
+  { "value": 995, "code": "海南省" ,"water":46.4,"load":252.3},
+  { "value": 3188, "code": "重庆市" ,"water":76.5,"load":498.1},
+  { "value": 8351, "code": "四川省" ,"water":252.4,"load":2748.9},
+  { "value": 3848, "code": "贵州省" ,"water":108.1,"load":1117},
+  { "value": 4714, "code": "云南省" ,"water":154.9,"load":1533.8},
+  { "value": 361, "code": "西藏自治区" ,"water":32,"load":4496.9},
+  { "value": 3944, "code": "陕西省" ,"water":92.6,"load":495.3},
+  { "value": 2509, "code": "甘肃省" ,"water":110,"load":325.9},
+  { "value": 590, "code": "青海省" ,"water":26.2,"load":919.3},
+  { "value": 717, "code": "宁夏回族自治区" ,"water":69.9,"load":12.6},
+  { "value": 2559, "code": "新疆维吾尔自治区" ,"water":587.7,"load":870.1},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2018":[
+  { "value": 2192, "code": "北京市" ,"water":39.3,"load":35.5},
+  { "value": 1383, "code": "天津市" ,"water":28.4,"load":17.6},
+  { "value": 7426, "code": "河北省" ,"water":182.4,"load":164.1},
+  { "value": 3502, "code": "山西省" ,"water":74.3,"load":121.9},
+  { "value": 2422, "code": "内蒙古自治区" ,"water":192.1,"load":461.5},
+  { "value": 4291, "code": "辽宁省" ,"water":130.3,"load":235.4},
+  { "value": 2484, "code": "吉林省" ,"water":119.5,"load":481.2},
+  { "value": 3327, "code": "黑龙江省" ,"water":343.9,"load":1011.4},
+  { "value": 2475, "code": "上海市" ,"water":103.4,"load":38.7},
+  { "value": 8446, "code": "江苏省" ,"water":592,"load":378.4},
+  { "value": 6273, "code": "浙江省" ,"water":173.8,"load":866.2},
+  { "value": 6076, "code": "安徽省" ,"water":285.8,"load":835.8},
+  { "value": 4104, "code": "福建省" ,"water":186.9,"load":778.5},
+  { "value": 4513, "code": "江西省" ,"water":250.8,"load":1149.1},
+  { "value": 10077, "code": "山东省" ,"water":212.7,"load":343.3},
+  { "value": 9864, "code": "河南省" ,"water":234.6,"load":339.8},
+  { "value": 5917, "code": "湖北省" ,"water":296.9,"load":857},
+  { "value": 6635, "code": "湖南省" ,"water":337,"load":1342.9},
+  { "value": 12348, "code": "广东省" ,"water":420.9,"load":1895.1},
+  { "value": 4947, "code": "广西壮族自治区" ,"water":287.8,"load":1831},
+  { "value": 982, "code": "海南省" ,"water":45.1,"load":418.1},
+  { "value": 3163, "code": "重庆市" ,"water":77.2,"load":524.2},
+  { "value": 8321, "code": "四川省" ,"water":259.1,"load":2952.6},
+  { "value": 3822, "code": "贵州省" ,"water":106.8,"load":978.7},
+  { "value": 4703, "code": "云南省" ,"water":155.7,"load":2206.5},
+  { "value": 354, "code": "西藏自治区" ,"water":31.7,"load":4658.2},
+  { "value": 3931, "code": "陕西省" ,"water":93.7,"load":371.4},
+  { "value": 2515, "code": "甘肃省" ,"water":112.3,"load":333.3},
+  { "value": 587, "code": "青海省" ,"water":26.1,"load":961.9},
+  { "value": 710, "code": "宁夏回族自治区" ,"water":66.2,"load":14.7},
+  { "value": 2520, "code": "新疆维吾尔自治区" ,"water":548.8,"load":858.8},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2017":[
+  { "value": 2194, "code": "北京市" ,"water":39.5,"load":29.8},
+  { "value": 1410, "code": "天津市" ,"water":27.5,"load":13},
+  { "value": 7409, "code": "河北省" ,"water":181.6,"load":138.3},
+  { "value": 3510, "code": "山西省" ,"water":74.9,"load":130.2},
+  { "value": 2433, "code": "内蒙古自治区" ,"water":188,"load":309.9},
+  { "value": 4312, "code": "辽宁省" ,"water":131.1,"load":186.3},
+  { "value": 2526, "code": "吉林省" ,"water":126.7,"load":394.4},
+  { "value": 3399, "code": "黑龙江省" ,"water":353.1,"load":742.5},
+  { "value": 2466, "code": "上海市" ,"water":104.8,"load":34},
+  { "value": 8423, "code": "江苏省" ,"water":591.3,"load":392.9},
+  { "value": 6170, "code": "浙江省" ,"water":179.5,"load":895.3},
+  { "value": 6057, "code": "安徽省" ,"water":290.3,"load":784.9},
+  { "value": 4065, "code": "福建省" ,"water":192,"load":1055.6},
+  { "value": 4511, "code": "江西省" ,"water":248,"load":1655.1},
+  { "value": 10033, "code": "山东省" ,"water":209.5,"load":225.6},
+  { "value": 9829, "code": "河南省" ,"water":233.8,"load":423.1},
+  { "value": 5904, "code": "湖北省" ,"water":290.3,"load":1248.8},
+  { "value": 6633, "code": "湖南省" ,"water":326.9,"load":1912.4},
+  { "value": 12141, "code": "广东省" ,"water":433.5,"load":1786.6},
+  { "value": 4907, "code": "广西壮族自治区" ,"water":284.9,"load":2388},
+  { "value": 972, "code": "海南省" ,"water":45.6,"load":383.9},
+  { "value": 3144, "code": "重庆市" ,"water":77.4,"load":656.1},
+  { "value": 8289, "code": "四川省" ,"water":268.4,"load":2467.1},
+  { "value": 3803, "code": "贵州省" ,"water":103.5,"load":1051.5},
+  { "value": 4693, "code": "云南省" ,"water":156.6,"load":2202.6},
+  { "value": 349, "code": "西藏自治区" ,"water":31.4,"load":4749.9},
+  { "value": 3904, "code": "陕西省" ,"water":93,"load":449.1},
+  { "value": 2522, "code": "甘肃省" ,"water":116.1,"load":238.9},
+  { "value": 586, "code": "青海省" ,"water":25.8,"load":785.7},
+  { "value": 705, "code": "宁夏回族自治区" ,"water":66.1,"load":10.8},
+  { "value": 2480, "code": "新疆维吾尔自治区" ,"water":552.3,"load":1018.6},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2017":[
+  { "value": 2194, "code": "北京市" ,"water":39.5,"load":29.8},
+  { "value": 1410, "code": "天津市" ,"water":27.5,"load":13},
+  { "value": 7409, "code": "河北省" ,"water":181.6,"load":138.3},
+  { "value": 3510, "code": "山西省" ,"water":74.9,"load":130.2},
+  { "value": 2433, "code": "内蒙古自治区" ,"water":188,"load":309.9},
+  { "value": 4312, "code": "辽宁省" ,"water":131.1,"load":186.3},
+  { "value": 2526, "code": "吉林省" ,"water":126.7,"load":394.4},
+  { "value": 3399, "code": "黑龙江省" ,"water":353.1,"load":742.5},
+  { "value": 2466, "code": "上海市" ,"water":104.8,"load":34},
+  { "value": 8423, "code": "江苏省" ,"water":591.3,"load":392.9},
+  { "value": 6170, "code": "浙江省" ,"water":179.5,"load":895.3},
+  { "value": 6057, "code": "安徽省" ,"water":290.3,"load":784.9},
+  { "value": 4065, "code": "福建省" ,"water":192,"load":1055.6},
+  { "value": 4511, "code": "江西省" ,"water":248,"load":1655.1},
+  { "value": 10033, "code": "山东省" ,"water":209.5,"load":225.6},
+  { "value": 9829, "code": "河南省" ,"water":233.8,"load":423.1},
+  { "value": 5904, "code": "湖北省" ,"water":290.3,"load":1248.8},
+  { "value": 6633, "code": "湖南省" ,"water":326.9,"load":1912.4},
+  { "value": 12141, "code": "广东省" ,"water":433.5,"load":1786.6},
+  { "value": 4907, "code": "广西壮族自治区" ,"water":284.9,"load":2388},
+  { "value": 972, "code": "海南省" ,"water":45.6,"load":383.9},
+  { "value": 3144, "code": "重庆市" ,"water":77.4,"load":656.1},
+  { "value": 8289, "code": "四川省" ,"water":268.4,"load":2467.1},
+  { "value": 3803, "code": "贵州省" ,"water":103.5,"load":1051.5},
+  { "value": 4693, "code": "云南省" ,"water":156.6,"load":2202.6},
+  { "value": 349, "code": "西藏自治区" ,"water":31.4,"load":4749.9},
+  { "value": 3904, "code": "陕西省" ,"water":93,"load":449.1},
+  { "value": 2522, "code": "甘肃省" ,"water":116.1,"load":238.9},
+  { "value": 586, "code": "青海省" ,"water":25.8,"load":785.7},
+  { "value": 705, "code": "宁夏回族自治区" ,"water":66.1,"load":10.8},
+  { "value": 2480, "code": "新疆维吾尔自治区" ,"water":552.3,"load":1018.6},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2016":[
+  { "value": 2195, "code": "北京市" ,"water":38.8,"load":35.1},
+  { "value": 1443, "code": "天津市" ,"water":27.2,"load":18.9},
+  { "value": 7375, "code": "河北省" ,"water":182.6,"load":208.3},
+  { "value": 3514, "code": "山西省" ,"water":75.5,"load":134.1},
+  { "value": 2436, "code": "内蒙古自治区" ,"water":190.3,"load":426.5},
+  { "value": 4327, "code": "辽宁省" ,"water":135.4,"load":331.6},
+  { "value": 2567, "code": "吉林省" ,"water":132.5,"load":488.8},
+  { "value": 3463, "code": "黑龙江省" ,"water":352.6,"load":843.7},
+  { "value": 2467, "code": "上海市" ,"water":104.8,"load":61},
+  { "value": 8381, "code": "江苏省" ,"water":577.4,"load":741.7},
+  { "value": 6072, "code": "浙江省" ,"water":181.1,"load":1323.3},
+  { "value": 6033, "code": "安徽省" ,"water":290.7,"load":1245.2},
+  { "value": 4016, "code": "福建省" ,"water":189.1,"load":2109},
+  { "value": 4496, "code": "江西省" ,"water":245.4,"load":2221.1},
+  { "value": 9973, "code": "山东省" ,"water":214,"load":220.3},
+  { "value": 9778, "code": "河南省" ,"water":227.6,"load":337.3},
+  { "value": 5885, "code": "湖北省" ,"water":282,"load":1498},
+  { "value": 6625, "code": "湖南省" ,"water":330.4,"load":2196.6},
+  { "value": 11908, "code": "广东省" ,"water":435,"load":2458.6},
+  { "value": 4857, "code": "广西壮族自治区" ,"water":290.6,"load":2178.6},
+  { "value": 957, "code": "海南省" ,"water":45,"load":489.9},
+  { "value": 3110, "code": "重庆市" ,"water":77.5,"load":604.9},
+  { "value": 8251, "code": "四川省" ,"water":267.3,"load":2340.9},
+  { "value": 3758, "code": "贵州省" ,"water":100.3,"load":1066.1},
+  { "value": 4677, "code": "云南省" ,"water":150.2,"load":2088.9},
+  { "value": 340, "code": "西藏自治区" ,"water":31.1,"load":4642.2},
+  { "value": 3874, "code": "陕西省" ,"water":90.8,"load":271.5},
+  { "value": 2520, "code": "甘肃省" ,"water":118.4,"load":168.4},
+  { "value": 582, "code": "青海省" ,"water":26.4,"load":612.7},
+  { "value": 695, "code": "宁夏回族自治区" ,"water":64.9,"load":9.6},
+  { "value": 2428, "code": "新疆维吾尔自治区" ,"water":565.4,"load":1093.4},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2015":[
+  { "value": 2188, "code": "北京市" ,"water":38.2,"load":26.8},
+  { "value": 1439, "code": "天津市" ,"water":25.7,"load":12.8},
+  { "value": 7345, "code": "河北省" ,"water":187.2,"load":135.1},
+  { "value": 3519, "code": "山西省" ,"water":73.6,"load":94},
+  { "value": 2440, "code": "内蒙古自治区" ,"water":185.8,"load":537},
+  { "value": 4338, "code": "辽宁省" ,"water":140.8,"load":179},
+  { "value": 2613, "code": "吉林省" ,"water":133.6,"load":331.3},
+  { "value": 3529, "code": "黑龙江省" ,"water":355.3,"load":814.1},
+  { "value": 2458, "code": "上海市" ,"water":103.8,"load":64.1},
+  { "value": 8315, "code": "江苏省" ,"water":574.5,"load":582.1},
+  { "value": 5985, "code": "浙江省" ,"water":186.1,"load":1407.1},
+  { "value": 6011, "code": "安徽省" ,"water":288.7,"load":914.1},
+  { "value": 3984, "code": "福建省" ,"water":201.3,"load":1325.9},
+  { "value": 4485, "code": "江西省" ,"water":245.8,"load":2001.2},
+  { "value": 9866, "code": "山东省" ,"water":212.8,"load":168.4},
+  { "value": 9701, "code": "河南省" ,"water":222.8,"load":287.2},
+  { "value": 5850, "code": "湖北省" ,"water":301.3,"load":1015.6},
+  { "value": 6615, "code": "湖南省" ,"water":330.4,"load":1919.3},
+  { "value": 11678, "code": "广东省" ,"water":443.1,"load":1933.4},
+  { "value": 4811, "code": "广西壮族自治区" ,"water":299.3,"load":2433.6},
+  { "value": 945, "code": "海南省" ,"water":45.8,"load":198.2},
+  { "value": 3070, "code": "重庆市" ,"water":79,"load":456.2},
+  { "value": 8196, "code": "四川省" ,"water":265.5,"load":2220.5},
+  { "value": 3708, "code": "贵州省" ,"water":97.5,"load":1153.7},
+  { "value": 4663, "code": "云南省" ,"water":150.1,"load":1871.9},
+  { "value": 330, "code": "西藏自治区" ,"water":30.8,"load":3853},
+  { "value": 3846, "code": "陕西省" ,"water":91.2,"load":333.4},
+  { "value": 2523, "code": "甘肃省" ,"water":119.2,"load":164.8},
+  { "value": 577, "code": "青海省" ,"water":26.8,"load":589.3},
+  { "value": 684, "code": "宁夏回族自治区" ,"water":70.4,"load":9.2},
+  { "value": 2385, "code": "新疆维吾尔自治区" ,"water":577.2,"load":930.3},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2014":[
+  { "value": 2171, "code": "北京市" ,"water":37.5,"load":20.3},
+  { "value": 1429, "code": "天津市" ,"water":24.1,"load":11.4},
+  { "value": 7323, "code": "河北省" ,"water":192.8,"load":106.2},
+  { "value": 3528, "code": "山西省" ,"water":71.4,"load":111},
+  { "value": 2449, "code": "内蒙古自治区" ,"water":182,"load":537.8},
+  { "value": 4358, "code": "辽宁省" ,"water":141.8,"load":145.9},
+  { "value": 2642, "code": "吉林省" ,"water":133,"load":306},
+  { "value": 3608, "code": "黑龙江省" ,"water":364.1,"load":944.3},
+  { "value": 2467, "code": "上海市" ,"water":105.9,"load":47.1},
+  { "value": 8281, "code": "江苏省" ,"water":591.3,"load":399.3},
+  { "value": 5890, "code": "浙江省" ,"water":192.9,"load":1132.1},
+  { "value": 5997, "code": "安徽省" ,"water":272.1,"load":778.5},
+  { "value": 3945, "code": "福建省" ,"water":205.6,"load":1219.6},
+  { "value": 4480, "code": "江西省" ,"water":259.3,"load":1631.8},
+  { "value": 9808, "code": "山东省" ,"water":214.5,"load":148.4},
+  { "value": 9645, "code": "河南省" ,"water":209.3,"load":283.4},
+  { "value": 5816, "code": "湖北省" ,"water":288.3,"load":914.3},
+  { "value": 6611, "code": "湖南省" ,"water":332.4,"load":1799.4},
+  { "value": 11489, "code": "广东省" ,"water":442.5,"load":1718.4},
+  { "value": 4770, "code": "广西壮族自治区" ,"water":307.6,"load":1990.9},
+  { "value": 936, "code": "海南省" ,"water":45,"load":383.5},
+  { "value": 3043, "code": "重庆市" ,"water":80.5,"load":642.6},
+  { "value": 8139, "code": "四川省" ,"water":236.9,"load":2557.7},
+  { "value": 3677, "code": "贵州省" ,"water":95.3,"load":1213.1},
+  { "value": 4653, "code": "云南省" ,"water":149.4,"load":1726.6},
+  { "value": 325, "code": "西藏自治区" ,"water":30.5,"load":4416.3},
+  { "value": 3827, "code": "陕西省" ,"water":89.8,"load":351.6},
+  { "value": 2531, "code": "甘肃省" ,"water":120.6,"load":198.4},
+  { "value": 576, "code": "青海省" ,"water":26.3,"load":793.9},
+  { "value": 678, "code": "宁夏回族自治区" ,"water":70.3,"load":10.1},
+  { "value": 2325, "code": "新疆维吾尔自治区" ,"water":581.8,"load":726.9},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0}
+],
+"2013":[
+    { "value": 2125, "code": "北京市" ,"water":36.4,"load":24.8},
+    { "value": 1410, "code": "天津市" ,"water":23.8,"load":14.6},
+    { "value": 7288, "code": "河北省" ,"water":191.3,"load":175.9},
+    { "value": 3535, "code": "山西省" ,"water":73.8,"load":126.6},
+    { "value": 2455, "code": "内蒙古自治区" ,"water":183.2,"load":959.8},
+    { "value": 4365, "code": "辽宁省" ,"water":142.1,"load":463.2},
+    { "value": 2668, "code": "吉林省" ,"water":131.5,"load":607.4},
+    { "value": 3666, "code": "黑龙江省" ,"water":362.3,"load":1419.6},
+    { "value": 2448, "code": "上海市" ,"water":123.2,"load":28},
+    { "value": 8192, "code": "江苏省" ,"water":576.7,"load":283.5},
+    { "value": 5784, "code": "浙江省" ,"water":198.3,"load":931.3},
+    { "value": 5988, "code": "安徽省" ,"water":296,"load":585.6},
+    { "value": 3885, "code": "福建省" ,"water":204.8,"load":1151.9},
+    { "value": 4476, "code": "江西省" ,"water":264.8,"load":1424},
+    { "value": 9746, "code": "山东省" ,"water":217.9,"load":291.7},
+    { "value": 9573, "code": "河南省" ,"water":240.6,"load":213.1},
+    { "value": 5798, "code": "湖北省" ,"water":291.8,"load":790.1},
+    { "value": 6600, "code": "湖南省" ,"water":332.5,"load":1582},
+    { "value": 11270, "code": "广东省" ,"water":443.2,"load":2263.2},
+    { "value": 4731, "code": "广西壮族自治区" ,"water":308.2,"load":2057.3},
+    { "value": 920, "code": "海南省" ,"water":43.2,"load":502.1},
+    { "value": 3011, "code": "重庆市" ,"water":83.9,"load":474.3},
+    { "value": 8109, "code": "四川省" ,"water":242.5,"load":2470.3},
+    { "value": 3632, "code": "贵州省" ,"water":92,"load":759.4},
+    { "value": 4641, "code": "云南省" ,"water":149.7,"load":1706.7},
+    { "value": 317, "code": "西藏自治区" ,"water":30.3,"load":4415.7},
+    { "value": 3804, "code": "陕西省" ,"water":89.2,"load":353.8},
+    { "value": 2537, "code": "甘肃省" ,"water":122,"load":268.9},
+    { "value": 571, "code": "青海省" ,"water":28.2,"load":645.6},
+    { "value": 666, "code": "宁夏回族自治区" ,"water":72.1,"load":11.4},
+    { "value": 2285, "code": "新疆维吾尔自治区" ,"water":588,"load":956},
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2012":[
+    { "value": 2078, "code": "北京市" ,"water":35.9,"load":39.5},
+    { "value": 1378, "code": "天津市" ,"water":23.1,"load":32.9},
+    { "value": 7262, "code": "河北省" ,"water":195.3,"load":235.5},
+    { "value": 3548, "code": "山西省" ,"water":73.4,"load":106.2},
+    { "value": 2464, "code": "内蒙古自治区" ,"water":184.4,"load":510.3},
+    { "value": 4375, "code": "辽宁省" ,"water":142.2,"load":547.3},
+    { "value": 2698, "code": "吉林省" ,"water":129.8,"load":460.5},
+    { "value": 3724, "code": "黑龙江省" ,"water":358.9,"load":841.4},
+    { "value": 2399, "code": "上海市" ,"water":116,"load":33.9},
+    { "value": 8120, "code": "江苏省" ,"water":552.2,"load":373.3},
+    { "value": 5685, "code": "浙江省" ,"water":198.1,"load":1444.8},
+    { "value": 5978, "code": "安徽省" ,"water":292.6,"load":701},
+    { "value": 3841, "code": "福建省" ,"water":200.1,"load":1511.4},
+    { "value": 4475, "code": "江西省" ,"water":242.5,"load":2174.4},
+    { "value": 9708, "code": "山东省" ,"water":221.8,"load":274.3},
+    { "value": 9532, "code": "河南省" ,"water":238.6,"load":265.5},
+    { "value": 5781, "code": "湖北省" ,"water":299.3,"load":813.9},
+    { "value": 6590, "code": "湖南省" ,"water":328.8,"load":1988.9},
+    { "value": 11041, "code": "广东省" ,"water":451,"load":2026.5},
+    { "value": 4694, "code": "广西壮族自治区" ,"water":303,"load":2087.4},
+    { "value": 910, "code": "海南省" ,"water":45.3,"load":364.3},
+    { "value": 2975, "code": "重庆市" ,"water":82.9,"load":476.9},
+    { "value": 8085, "code": "四川省" ,"water":245.9,"load":2892.4},
+    { "value": 3587, "code": "贵州省" ,"water":100.8,"load":974},
+    { "value": 4631, "code": "云南省" ,"water":151.8,"load":1689.8},
+    { "value": 315, "code": "西藏自治区" ,"water":29.8,"load":4196.4},
+    { "value": 3787, "code": "陕西省" ,"water":88,"load":390.5},
+    { "value": 2550, "code": "甘肃省" ,"water":123.1,"load":267},
+    { "value": 571, "code": "青海省" ,"water":27.4,"load":895.2},
+    { "value": 659, "code": "宁夏回族自治区" ,"water":69.4,"load":10.8},
+    { "value": 2253, "code": "新疆维吾尔自治区" ,"water":590.1,"load":900.6},
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2011":[
+  { "value": 2024, "code": "北京市" ,"water":36,"load":26.8},
+  { "value": 1341, "code": "天津市" ,"water":23.1,"load":15.4},
+  { "value": 7232, "code": "河北省" ,"water":196,"load":157.2},
+  { "value": 3562, "code": "山西省" ,"water":74.2,"load":124.3},
+  { "value": 2470, "code": "内蒙古自治区" ,"water":184.7,"load":419},
+  { "value": 4379, "code": "辽宁省" ,"water":144.5,"load":294.8},
+  { "value": 2725, "code": "吉林省" ,"water":131.2,"load":315.9},
+  { "value": 3782, "code": "黑龙江省" ,"water":352.4,"load":629.5},
+  { "value": 2356, "code": "上海市" ,"water":124.5,"load":20.7},
+  { "value": 8023, "code": "江苏省" ,"water":556.2,"load":492.4},
+  { "value": 5570, "code": "浙江省" ,"water":198.5,"load":745},
+  { "value": 5972, "code": "安徽省" ,"water":294.6,"load":602.3},
+  { "value": 3784, "code": "福建省" ,"water":208.8,"load":774.9},
+  { "value": 4474, "code": "江西省" ,"water":262.9,"load":1037.9},
+  { "value": 9665, "code": "山东省" ,"water":224.1,"load":347.6},
+  { "value": 9461, "code": "河南省" ,"water":229.1,"load":328},
+  { "value": 5760, "code": "湖北省" ,"water":296.7,"load":757.5},
+  { "value": 6581, "code": "湖南省" ,"water":326.5,"load":1126.9},
+  { "value": 10756, "code": "广东省" ,"water":464.2,"load":1471.3},
+  { "value": 4655, "code": "广西壮族自治区" ,"water":301.8,"load":1350},
+  { "value": 890, "code": "海南省" ,"water":44.5,"load":484.1},
+  { "value": 2944, "code": "重庆市" ,"water":86.8,"load":514.6},
+  { "value": 8064, "code": "四川省" ,"water":233.5,"load":2239.5},
+  { "value": 3530, "code": "贵州省" ,"water":95.9,"load":626},
+  { "value": 4620, "code": "云南省" ,"water":146.8,"load":1480.2},
+  { "value": 309, "code": "西藏自治区" ,"water":31,"load":4402.7},
+  { "value": 3765, "code": "陕西省" ,"water":87.8,"load":604.4},
+  { "value": 2552, "code": "甘肃省" ,"water":122.9,"load":242.2},
+  { "value": 568, "code": "青海省" ,"water":31.2,"load":733.1},
+  { "value": 648, "code": "宁夏回族自治区" ,"water":73.6,"load":8.8},
+  { "value": 2225, "code": "新疆维吾尔自治区" ,"water":523.5,"load":885.7},
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2010":[
+    { "value": 1962, "code": "北京市" ,"water": 35.2, "load": 23.1 },
+    { "value": 1299, "code": "天津市" ,"water": 22.5, "load": 9.2 },
+    { "value": 7194, "code": "河北省" ,"water": 193.7, "load": 138.9 },
+    { "value": 3574, "code": "山西省" ,"water": 63.8, "load": 91.5 },
+    { "value": 2472, "code": "内蒙古自治区" ,"water": 181.9, "load": 388.5 },
+    { "value": 4375, "code": "辽宁省" ,"water": 143.7, "load": 606.7 },
+    { "value": 2747, "code": "吉林省" ,"water": 120, "load": 686.7 },
+    { "value": 3833, "code": "黑龙江省" ,"water": 325, "load": 853.5 },
+    { "value": 2303, "code": "上海市" ,"water": 126.3, "load": 36.8 },
+    { "value": 7869, "code": "江苏省" ,"water": 552.2, "load": 383.5 },
+    { "value": 5447, "code": "浙江省" ,"water": 203, "load": 1398.6 },
+    { "value": 5957, "code": "安徽省" ,"water": 293.1, "load": 922.8 },
+    { "value": 3693, "code": "福建省" ,"water": 202.5, "load": 1652.7 },
+    { "value": 4462, "code": "江西省" ,"water": 239.7, "load": 2275.5 },
+    { "value": 9588, "code": "山东省" ,"water": 222.5, "load": 309.1 },
+    { "value": 9405, "code": "河南省" ,"water": 224.6, "load": 534.9 },
+    { "value": 5728, "code": "湖北省" ,"water": 288, "load": 1268.7 },
+    { "value": 6570, "code": "湖南省" ,"water": 325.2, "load": 1906.6 },
+    { "value": 10441, "code": "广东省" ,"water": 469, "load": 1998.8 },
+    { "value": 4610, "code": "广西壮族自治区" ,"water": 301.6, "load": 1823.6 },
+    { "value": 869, "code": "海南省" ,"water": 44.4, "load": 479.8 },
+    { "value": 2885, "code": "重庆市" ,"water": 86.4, "load": 464.3 },
+    { "value": 8045, "code": "四川省" ,"water": 230.3, "load": 2575.3 },
+    { "value": 3479, "code": "贵州省" ,"water": 101.4, "load": 956.5 },
+    { "value": 4602, "code": "云南省" ,"water": 147.5, "load": 1941.4 },
+    { "value": 300, "code": "西藏自治区" ,"water": 35.2, "load": 4593 },
+    { "value": 3735, "code": "陕西省" ,"water": 83.4, "load": 507.5 },
+    { "value": 2560, "code": "甘肃省" ,"water": 121.8, "load": 215.2 },
+    { "value": 563, "code": "青海省" ,"water": 30.8, "load": 741.1 },
+    { "value": 633, "code": "宁夏回族自治区" ,"water": 72.4, "load": 9.3 },
+    { "value": 2185, "code": "新疆维吾尔自治区" ,"water": 535.1, "load": 1113.1 } ,
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }   
+],
+"2009":[
+    { "value": 1860, "code": "北京市" ,"water": 35.5, "load": 21.8 },
+    { "value": 1228, "code": "天津市" ,"water": 23.4, "load": 15.2 },
+    { "value": 7034, "code": "河北省" ,"water": 193.7, "load": 141.2 },
+    { "value": 3427, "code": "山西省" ,"water": 56.3, "load": 85.8 },
+    { "value": 2458, "code": "内蒙古自治区" ,"water": 181.3, "load": 378.1 },
+    { "value": 4341, "code": "辽宁省" ,"water": 142.8, "load": 171 },
+    { "value": 2740, "code": "吉林省" ,"water": 111.1, "load": 298 },
+    { "value": 3826, "code": "黑龙江省" ,"water": 316.3, "load": 989.6 },
+    { "value": 2210, "code": "上海市" ,"water": 125.2, "load": 41.6 },
+    { "value": 7810, "code": "江苏省" ,"water": 549.2, "load": 400.3 },
+    { "value": 5276, "code": "浙江省" ,"water": 197.8, "load": 931.3 },
+    { "value": 6131, "code": "安徽省" ,"water": 291.9, "load": 733.1 },
+    { "value": 3666, "code": "福建省" ,"water": 201.4, "load": 800.8 },
+    { "value": 4432, "code": "江西省" ,"water": 241.3, "load": 1166.9 },
+    { "value": 9470, "code": "山东省" ,"water": 220, "load": 285 },
+    { "value": 9487, "code": "河南省" ,"water": 233.7, "load": 328.8 },
+    { "value": 5720, "code": "湖北省" ,"water": 281.4, "load": 825.3 },
+    { "value": 6406, "code": "湖南省" ,"water": 322.3, "load": 1400.5 },
+    { "value": 10130, "code": "广东省" ,"water": 463.4, "load": 1613.7 },
+    { "value": 4856, "code": "广西壮族自治区" ,"water": 303.4, "load": 1484.3 },
+    { "value": 864, "code": "海南省" ,"water": 44.5, "load": 480.7 },
+    { "value": 2859, "code": "重庆市" ,"water": 85.3, "load": 455.9 },
+    { "value": 8185, "code": "四川省" ,"water": 223.5, "load": 2332.2 },
+    { "value": 3537, "code": "贵州省" ,"water": 100.4, "load": 910 },
+    { "value": 4571, "code": "云南省" ,"water": 152.6, "load": 1576.6 },
+    { "value": 296, "code": "西藏自治区" ,"water": 30.9, "load": 4029.2 },
+    { "value": 3727, "code": "陕西省" ,"water": 84.3, "load": 416.5 },
+    { "value": 2555, "code": "甘肃省" ,"water": 120.6, "load": 209 },
+    { "value": 557, "code": "青海省" ,"water": 28.8, "load": 895.1 },
+    { "value": 625, "code": "宁夏回族自治区" ,"water": 72.2, "load": 8.4 },
+    { "value": 2159, "code": "新疆维吾尔自治区" ,"water": 530.9, "load": 754.3 },
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2008":[
+    { "value": 1771, "code": "北京市" ,"water": 35.1, "load": 34.2 },
+    { "value": 1176, "code": "天津市" ,"water": 22.3, "load": 18.3 },
+    { "value": 6989, "code": "河北省" ,"water": 195, "load": 161 },
+    { "value": 3411, "code": "山西省" ,"water": 56.9, "load": 87.4 },
+    { "value": 2444, "code": "内蒙古自治区" ,"water": 175.8, "load": 412.1 },
+    { "value": 4315, "code": "辽宁省" ,"water": 142.8, "load": 266 },
+    { "value": 2734, "code": "吉林省" ,"water": 104.1, "load": 332 },
+    { "value": 3825, "code": "黑龙江省" ,"water": 297, "load": 462 },
+    { "value": 2141, "code": "上海市" ,"water": 119.8, "load": 37 },
+    { "value": 7762, "code": "江苏省" ,"water": 558.3, "load": 378 },
+    { "value": 5212, "code": "浙江省" ,"water": 216.6, "load": 855.2 },
+    { "value": 6135, "code": "安徽省" ,"water": 266.4, "load": 699.3 },
+    { "value": 3639, "code": "福建省" ,"water": 198, "load": 1036.9 },
+    { "value": 4400, "code": "江西省" ,"water": 234.2, "load": 1356.2 },
+    { "value": 9417, "code": "山东省" ,"water": 219.9, "load": 328.7 },
+    { "value": 9429, "code": "河南省" ,"water": 227.5, "load": 371.3 },
+    { "value": 5711, "code": "湖北省" ,"water": 270.7, "load": 1033.9 },
+    { "value": 6380, "code": "湖南省" ,"water": 323.6, "load": 1600 },
+    { "value": 9893, "code": "广东省" ,"water": 461.5, "load": 2206.8 },
+    { "value": 4816, "code": "广西壮族自治区" ,"water": 310.1, "load": 2282.5 },
+    { "value": 854, "code": "海南省" ,"water": 46.9, "load": 419.1 },
+    { "value": 2839, "code": "重庆市" ,"water": 82.8, "load": 576.9 },
+    { "value": 8138, "code": "四川省" ,"water": 207.6, "load": 2489.9 },
+    { "value": 3596, "code": "贵州省" ,"water": 101.9, "load": 1140.7 },
+    { "value": 4543, "code": "云南省" ,"water": 153.1, "load": 2314.5 },
+    { "value": 292, "code": "西藏自治区" ,"water": 37.5, "load": 4560.2 },
+    { "value": 3718, "code": "陕西省" ,"water": 85.5, "load": 304 },
+    { "value": 2551, "code": "甘肃省" ,"water": 122.2, "load": 187.5 },
+    { "value": 554, "code": "青海省" ,"water": 34.4, "load": 658.1 },
+    { "value": 618, "code": "宁夏回族自治区" ,"water": 74.2, "load": 9.2 },
+    { "value": 2131, "code": "新疆维吾尔自治区" ,"water": 528.2, "load": 815.6 },
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2007":[
+    { "value": 1676, "code": "北京市" ,"water": 34.8, "load": 23.8 },
+    { "value": 1115, "code": "天津市" ,"water": 23.4, "load": 11.3 },
+    { "value": 6943, "code": "河北省" ,"water": 202.5, "load": 119.8 },
+    { "value": 3393, "code": "山西省" ,"water": 58.7, "load": 103.4 },
+    { "value": 2429, "code": "内蒙古自治区" ,"water": 180, "load": 295.9 },
+    { "value": 4298, "code": "辽宁省" ,"water": 142.9, "load": 261.7 },
+    { "value": 2730, "code": "吉林省" ,"water": 100.8, "load": 346 },
+    { "value": 3824, "code": "黑龙江省" ,"water": 291.4, "load": 491.8 },
+    { "value": 2064, "code": "上海市" ,"water": 120.2, "load": 34.5 },
+    { "value": 7723, "code": "江苏省" ,"water": 558.3, "load": 495.7 },
+    { "value": 5155, "code": "浙江省" ,"water": 211, "load": 892.1 },
+    { "value": 6118, "code": "安徽省" ,"water": 232.1, "load": 712.5 },
+    { "value": 3612, "code": "福建省" ,"water": 196.3, "load": 1072.9 },
+    { "value": 4368, "code": "江西省" ,"water": 234.9, "load": 1113 },
+    { "value": 9367, "code": "山东省" ,"water": 219.5, "load": 387.1 },
+    { "value": 9360, "code": "河南省" ,"water": 209.3, "load": 465.2 },
+    { "value": 5699, "code": "湖北省" ,"water": 258.7, "load": 1015.1 },
+    { "value": 6355, "code": "湖南省" ,"water": 324.3, "load": 1426.5 },
+    { "value": 9660, "code": "广东省" ,"water": 462.5, "load": 1581.2 },
+    { "value": 4768, "code": "广西壮族自治区" ,"water": 310.4, "load": 1386.3 },
+    { "value": 845, "code": "海南省" ,"water": 46.7, "load": 283.5 },
+    { "value": 2816, "code": "重庆市" ,"water": 77.4, "load": 663 },
+    { "value": 8127, "code": "四川省" ,"water": 214, "load": 2299.8 },
+    { "value": 3632, "code": "贵州省" ,"water": 98, "load": 1054.6 },
+    { "value": 4514, "code": "云南省" ,"water": 150, "load": 2255.5 },
+    { "value": 289, "code": "西藏自治区" ,"water": 36.7, "load": 4321.4 },
+    { "value": 3708, "code": "陕西省" ,"water": 81.5, "load": 377 },
+    { "value": 2548, "code": "甘肃省" ,"water": 122.5, "load": 228.7 },
+    { "value": 552, "code": "青海省" ,"water": 31.1, "load": 661.6 },
+    { "value": 610, "code": "宁夏回族自治区" ,"water": 71, "load": 10.4 },
+    { "value": 2095, "code": "新疆维吾尔自治区" ,"water": 517.7, "load": 863.8 },
+    { "value": 0, "code": "台湾" ,"water":0,"load":0},
+    { "value": 0, "code": "澳门" ,"water":0,"load":0},
+    { "value": 0, "code": "香港" ,"water":0,"load":0 }  
+],
+"2006":[
+  { "value": 1601, "code": "北京市" ,"water": 34.3, "load": 22.1 },
+  { "value": 1075, "code": "天津市" ,"water": 23, "load": 10.1 },
+  { "value": 6898, "code": "河北省" ,"water": 204, "load": 107.3 },
+  { "value": 3375, "code": "山西省" ,"water": 59.3, "load": 88.5 },
+  { "value": 2415, "code": "内蒙古自治区" ,"water": 178.7, "load": 411.3 },
+  { "value": 4271, "code": "辽宁省" ,"water": 141.2, "load": 261.4 },
+  { "value": 2723, "code": "吉林省" ,"water": 102.9, "load": 353.6 },
+  { "value": 3823, "code": "黑龙江省" ,"water": 286.2, "load": 727.9 },
+  { "value": 1964, "code": "上海市" ,"water": 118.6, "load": 27.6 },
+  { "value": 7656, "code": "江苏省" ,"water": 546.4, "load": 404.4 },
+  { "value": 5072, "code": "浙江省" ,"water": 208.3, "load": 903.6 },
+  { "value": 6110, "code": "安徽省" ,"water": 241.9, "load": 580.5 },
+  { "value": 3585, "code": "福建省" ,"water": 187.3, "load": 1623.5 },
+  { "value": 4339, "code": "江西省" ,"water": 205.7, "load": 1630 },
+  { "value": 9309, "code": "山东省" ,"water": 225.8, "load": 199.3 },
+  { "value": 9392, "code": "河南省" ,"water": 227, "load": 321.8 },
+  { "value": 5693, "code": "湖北省" ,"water": 258.8, "load": 639.7 },
+  { "value": 6342, "code": "湖南省" ,"water": 327.7, "load": 1770.3 },
+  { "value": 9442, "code": "广东省" ,"water": 459.4, "load": 2216.2 },
+  { "value": 4719, "code": "广西壮族自治区" ,"water": 314.4, "load": 1881.1 },
+  { "value": 836, "code": "海南省" ,"water": 46.5, "load": 227.6 },
+  { "value": 2808, "code": "重庆市" ,"water": 73.2, "load": 380.3 },
+  { "value": 8169, "code": "四川省" ,"water": 215.1, "load": 1865.8 },
+  { "value": 3690, "code": "贵州省" ,"water": 100, "load": 814.6 },
+  { "value": 4483, "code": "云南省" ,"water": 144.8, "load": 1711.7 },
+  { "value": 285, "code": "西藏自治区" ,"water": 35, "load": 4157.1 },
+  { "value": 3699, "code": "陕西省" ,"water": 84.1, "load": 275.5 },
+  { "value": 2547, "code": "甘肃省" ,"water": 122.3, "load": 184.6 },
+  { "value": 548, "code": "青海省" ,"water": 32.2, "load": 569 },
+  { "value": 604, "code": "宁夏回族自治区" ,"water": 77.6, "load": 10.6 },
+  { "value": 2050, "code": "新疆维吾尔自治区" ,"water": 513.4, "load": 953.1 },
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+],
+"2005":[
+{ "value": 1538, "code": "北京市" ,"water": 34.5, "load": 23.2 },
+  { "value": 1043, "code": "天津市" ,"water": 23.1, "load": 10.6 },
+  { "value": 6851, "code": "河北省" ,"water": 201.8, "load": 134.6 },
+  { "value": 3355, "code": "山西省" ,"water": 55.7, "load": 84.1 },
+  { "value": 2403, "code": "内蒙古自治区" ,"water": 174.8, "load": 456.2 },
+  { "value": 4221, "code": "辽宁省" ,"water": 133.3, "load": 377.2 },
+  { "value": 2716, "code": "吉林省" ,"water": 98.4, "load": 559.7 },
+  { "value": 3820, "code": "黑龙江省" ,"water": 271.5, "load": 744.3 },
+  { "value": 1890, "code": "上海市" ,"water": 121.3, "load": 24.5 },
+  { "value": 7588, "code": "江苏省" ,"water": 519.7, "load": 467 },
+  { "value": 4991, "code": "浙江省" ,"water": 209.9, "load": 1014.4 },
+  { "value": 6120, "code": "安徽省" ,"water": 208, "load": 719.3 },
+  { "value": 3557, "code": "福建省" ,"water": 186.9, "load": 1401.1 },
+  { "value": 4311, "code": "江西省" ,"water": 208.1, "load": 1510.1 },
+  { "value": 9248, "code": "山东省" ,"water": 211, "load": 415.9 },
+  { "value": 9380, "code": "河南省" ,"water": 197.8, "load": 558.5 },
+  { "value": 5710, "code": "湖北省" ,"water": 253.4, "load": 934 },
+  { "value": 6326, "code": "湖南省" ,"water": 328.4, "load": 1671 },
+  { "value": 9194, "code": "广东省" ,"water": 459, "load": 1747.5 },
+  { "value": 4660, "code": "广西壮族自治区" ,"water": 312.9, "load": 1720.8 },
+  { "value": 828, "code": "海南省" ,"water": 44.1, "load": 307.3 },
+  { "value": 2798, "code": "重庆市" ,"water": 71.2, "load": 509.8 },
+  { "value": 8212, "code": "四川省" ,"water": 212.3, "load": 2922.6 },
+  { "value": 3730, "code": "贵州省" ,"water": 97.2, "load": 834.6 },
+  { "value": 4450, "code": "云南省" ,"water": 146.8, "load": 1846.4 },
+  { "value": 280, "code": "西藏自治区" ,"water": 33.2, "load": 4451.1 },
+  { "value": 3690, "code": "陕西省" ,"water": 78.8, "load": 490.6 },
+  { "value": 2545, "code": "甘肃省" ,"water": 123, "load": 269.6 },
+  { "value": 543, "code": "青海省" ,"water": 30.7, "load": 876.1 },
+  { "value": 596, "code": "宁夏回族自治区" ,"water": 78.1, "load": 8.5 },
+  { "value": 2010, "code": "新疆维吾尔自治区" ,"water": 508.5, "load": 962.8 },
+  { "value": 0, "code": "台湾" ,"water":0,"load":0},
+  { "value": 0, "code": "澳门" ,"water":0,"load":0},
+  { "value": 0, "code": "香港" ,"water":0,"load":0 }
+  
+],
+  "2004": [
+  { "value": 1493, "code": "北京市" ,"water": 34.6, "load": 21.3},
+{ "value": 1024, "code": "天津市" ,"water": 22.1, "load": 14.3 },
+{ "value": 6809, "code": "河北省" ,"water": 195.9, "load": 154.2 },
+{ "value": 3335, "code": "山西省" ,"water": 55.9, "load": 92.5 },
+{ "value": 2393, "code": "内蒙古自治区" ,"water": 171.5, "load": 437.6 },
+{ "value": 4217, "code": "辽宁省" ,"water": 130.2, "load": 285.7 },
+{ "value": 2709, "code": "吉林省" ,"water": 99.2, "load": 323.7 },
+{ "value": 3817, "code": "黑龙江省" ,"water": 259.4, "load": 652.1 },
+{ "value": 1835, "code": "上海市" ,"water": 118.1, "load": 25 },
+{ "value": 7523, "code": "江苏省" ,"water": 525.6, "load": 204 },
+{ "value": 4925, "code": "浙江省" ,"water": 207.8, "load": 675.7 },
+{ "value": 6228, "code": "安徽省" ,"water": 209.7, "load": 500.7 },
+{ "value": 3529, "code": "福建省" ,"water": 184.9, "load": 712.2 },
+{ "value": 4284, "code": "江西省" ,"water": 203.5, "load": 1034.6 },
+{ "value": 9180, "code": "山东省" ,"water": 214.9, "load": 349.5 },
+{ "value": 9717, "code": "河南省" ,"water": 200.7, "load": 406.6 },
+{ "value": 5698, "code": "湖北省" ,"water": 242.7, "load": 926.4 },
+{ "value": 6698, "code": "湖南省" ,"water": 323.6, "load": 1641.3 },
+{ "value": 9111, "code": "广东省" ,"water": 464.8, "load": 1187.7 },
+{ "value": 4889, "code": "广西壮族自治区" ,"water": 290.8, "load": 1604.5 },
+{ "value": 818, "code": "海南省" ,"water": 46.3, "load": 171.1 },
+{ "value": 2793, "code": "重庆市" ,"water": 67.5, "load": 558.8 },
+{ "value": 8090, "code": "四川省" ,"water": 210.4, "load": 2434.2 },
+{ "value": 3904, "code": "贵州省" ,"water": 94.3, "load": 991 },
+{ "value": 4415, "code": "云南省" ,"water": 146.9, "load": 2106.3 },
+{ "value": 276, "code": "西藏自治区" ,"water": 28, "load": 4665.2 },
+{ "value": 3681, "code": "陕西省" ,"water": 75.5, "load": 309.4 },
+{ "value": 2541, "code": "甘肃省" ,"water": 121.8, "load": 171.9 },
+{ "value": 539, "code": "青海省" ,"water": 30.2, "load": 606.8 },
+{ "value": 588, "code": "宁夏回族自治区" ,"water": 74, "load": 9.9 },
+{ "value": 1963, "code": "新疆维吾尔自治区" ,"water": 497.1, "load": 855.4 },
+{ "value": 0, "code": "台湾" ,"water":0,"load":0},
+{ "value": 0, "code": "澳门" ,"water":0,"load":0},
+{ "value": 0, "code": "香港" ,"water":0,"load":0 }
+]
+ }
+  return data;  
+} 
+document.getElementById('dropdown2').addEventListener('change', function() {
+  var selectedOption = this.value; 
+  if (selectedOption === 'waterload') {
+    var selectedYear = document.getElementById('dropdown').value;
+    createMap2(selectedYear);
+      document.getElementById('dropdown').addEventListener('change', function() {
+      var selectedYear = this.value;
+      createMap2(selectedYear);
+    });
+  } else if (selectedOption === 'supply') {
+    var selectedYear = document.getElementById('dropdown').value;
+    createMap1(selectedYear);
+      document.getElementById('dropdown').addEventListener('change', function() {
+      var selectedYear = this.value;
+      createMap1(selectedYear);
+    });
+  }
+});
+
+document.getElementById('dropdown').addEventListener('change', function() {
+  var selectedYear = this.value; 
+  if (document.getElementById('dropdown2').value == 'supply') 
+  {
+      createMap1(selectedYear);
+  }
+  if (document.getElementById('dropdown2').value == 'waterload') {
+  createMap2(selectedYear);
+}
+});
+
+    var data555={};
+    let waterdata=[];
+    var data2=getDataSource();
+    var lindata={};
+    let keys = Object.keys(data2);
+    for(let i=0;i<keys.length;i++)
+    {
+      let time=keys[i];
+      for(let j=0;j<data2[time].length;j++)
+      {
+        data2[time][j]["time"]=time;
+        waterdata.push(data2[time][j]);
+      }
+    }
+    let uniqueValuesArray =[];
+    for(let m=0;m<data2[keys[18]].length;m++)
+    {
+     
+      
+        uniqueValuesArray.push(data2[keys[18]][m]["code"])
+    }
+    var waterdata2={};
+    for (let i = 0; i < uniqueValuesArray.length; i++) {
+      let currentUniqueValue = uniqueValuesArray[i];
+    waterdata2[currentUniqueValue] = [];
+    for(let q=0;q<waterdata.length;q++)
+    {
+       let data111=waterdata[q];
+       if(data111.code===uniqueValuesArray[i])
+      waterdata2[uniqueValuesArray[i]].push(data111);
+    }
+  }
+  console.log(waterdata2);
+    // 创建地图
+    var sampleData = {};
+    //供水
+    function createMap1(year) 
+	{
+      var data = getDataFromSource(year);
+
+      d3.select("#statesvg").selectAll("path")
+      .remove()
+
+      data.forEach(function(d) {
+        var code = d.code;
+        var value = d.value;
+        var water = d.water;
+        var avg = d.value / d.water
+        var load=d.load;
+   
+        sampleData[code] = {
+          population: value,
+          supply: water,
+          avg: water / value,
+          load:load,
+          color: d3.interpolate("#ffffcc", "#800026")(avg/50)
+        };
+      });
+      uStates.draw("#statesvg", sampleData,waterdata2);
+
+    }
+
+    //水资源
+    function createMap2(year) 
+	{
+      var data = getDataFromSource(year);
+
+      d3.select("#statesvg").selectAll("path")
+      .remove()
+
+      data.forEach(function(d) {
+        var code = d.code;
+        var value = d.value;
+        var load = d.load;
+        var avg = d.value / d.load
+        var supply=d.water;
+   
+        sampleData[code] = {
+          population: value,
+          load: load,
+          avg: load / value,
+          supply:supply,
+          color: d3.interpolate("#ffffcc", "#800026")(avg/50)
+        };
+      });
+      uStates.draw("#statesvg", sampleData,waterdata2);
+    }
+
+	createMap1("2022")
+  </script>
+
+<p class="text-between-23">动态表示全国供水量、水资源、人口排名靠前的省市</p>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="myload"class="bar1">
+    <div id="time"></div>
+    <div>各省水资源动态图</div>
+  </div>
+  <div id="mysupply"class="bar">
+    <div id="time1"></div>
+    <div>各省供水量动态图</div>
+  </div>
+  <div id="mypopulation"class="bar">
+    <div id="time2"></div>
+    <div>各省人口动态图</div>
+  </div>
+  <div id="mychazhi"class="bar">
+    <div id="time3"></div>
+    <div>各省供水水资源差值动态图</div>
+  </div>
+  <select id="downbar">
+      <option value="myload">水资源量数据表</option>
+      <option value="mysupply">供水量数据表</option>
+      <option value="mypopulation">人口数据表</option>
+      <option value="mychazhi">差值表</option>
+    </select>  
+  </body>
+  <script src="dongtu.js"></script>
+
+</body>
+</html>
